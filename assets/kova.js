@@ -42,9 +42,18 @@
     var label = produit.nom + ', ' + variante.nomCouleur.toLowerCase() + ', ' + variante.nomFil.toLowerCase() + ', ' + prix(produit.prix);
     return '<a class="tile' + (opts.reveal === false ? '' : ' rv') + '" href="' + url(produit, variante) + '" aria-label="' + esc(label) + '">' +
       '<div class="top"><span class="no">N°' + esc(variante.no) + '</span><span>' + esc(opts.titre || variante.etiquette) + '</span></div>' +
-      '<div class="img"><img class="cap" src="' + esc(variante.image) + '" alt="' + esc(variante.alt) + '" loading="lazy" width="1000" height="800"></div>' +
-      '<div class="add" aria-hidden="true">VOIR LA CASQUETTE →</div>' +
+      '<div class="img"><img class="cap" src="' + esc(variante.image) + '" alt="' + esc(variante.alt) + '" loading="lazy" width="1000" height="800">' +
+      '<div class="add" aria-hidden="true">VOIR LA CASQUETTE →</div></div>' +
       '<div class="bar"><div class="name">' + esc(opts.nom || variante.nomCouleur) + '</div><div class="price">' + prix(produit.prix) + '</div></div>' +
+      '</a>';
+  }
+
+  // Tuile "motif" : le dessin brodé (couronne, cœur), en tête des coloris du modèle
+  function tuileMotif(produit) {
+    return '<a class="tile art rv" href="' + url(produit) + '" aria-label="' + esc(produit.nom + ', ' + produit.sens.toLowerCase() + ', voir le modèle') + '">' +
+      '<div class="top"><span>Le motif</span><span class="accent">' + esc(produit.sens) + '</span></div>' +
+      '<div class="img"><img src="' + esc(produit.motif.src) + '" alt="" loading="lazy"></div>' +
+      '<div class="bar"><div class="name">' + esc(produit.nom) + '</div><div class="he" lang="he" dir="rtl">' + esc(produit.hebreu) + '</div></div>' +
       '</a>';
   }
 
@@ -52,9 +61,11 @@
     var grilles = document.querySelectorAll('[data-produits]');
     Array.prototype.forEach.call(grilles, function (g) {
       var html = '';
+      var avecMotifs = g.hasAttribute('data-motifs');
       g.getAttribute('data-produits').split(',').forEach(function (handle) {
         var p = C.produit(handle.trim());
         if (!p) return;
+        if (avecMotifs && p.motif.type === 'image') html += tuileMotif(p);
         p.variantes.forEach(function (v) { html += tuile(p, v); });
       });
       g.innerHTML = html;

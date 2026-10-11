@@ -112,7 +112,7 @@
     '</div>' +
     '<section class="s-creme" aria-labelledby="t-drop">' +
       '<div class="sec-head"><h2 id="t-drop" class="h-xl rvl">Le reste<br>du drop.</h2><div class="lede rv">Les autres collections du Drop 01.</div></div>' +
-      '<div class="grid m250 bt">' + autres.map(function (a) { return K.tuile(a.produit, a.variante, { nom: a.produit.nom }); }).join('') + '</div>' +
+      '<div class="grid c4 bt">' + autres.map(function (a) { return K.tuile(a.produit, a.variante, { nom: a.produit.nom }); }).join('') + '</div>' +
     '</section>';
 
   /* ---------- Interactions ---------- */
