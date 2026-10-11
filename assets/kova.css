@@ -218,7 +218,6 @@ button { font: inherit; color: inherit; }
 .im-word { position: relative; display: block; font-family: var(--f-titre); font-size: clamp(64px, 9vw, 120px); letter-spacing: .06em; line-height: .9; margin-right: -.06em; }
 .im-dim { display: block; color: var(--trait-sombre); }
 .im-fill { position: absolute; inset: 0; color: var(--orange); }
-.cur-label { margin-top: 22px; text-align: center; font-family: var(--f-mono); font-size: 11px; letter-spacing: .3em; color: var(--texte-label); }
 
 .curtain { animation: curtainGone .01s linear 2.05s forwards; }
 .curtain .half.t { animation: halfTop .85s cubic-bezier(.76, 0, .24, 1) 1.35s both; }

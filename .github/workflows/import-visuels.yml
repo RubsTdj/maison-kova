@@ -1,0 +1,31 @@
+name: Importer les visuels Canva
+
+# Télécharge les exports Canva listés dans images/import/manifest.json
+# et commite les images dans images/photo/ (voir scripts/import_visuels.py).
+on:
+  push:
+    paths:
+      - images/import/manifest.json
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  importer:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install pillow==11.1.0
+      - run: python3 scripts/import_visuels.py images/import/manifest.json
+      - name: Commit des visuels
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898333+github-actions[bot]@users.noreply.github.com"
+          git add images/photo
+          git diff --cached --quiet && exit 0
+          git commit -m "Visuels réalistes importés depuis Canva"
+          git push
