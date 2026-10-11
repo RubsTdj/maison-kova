@@ -43,12 +43,12 @@ window.KOVA_CATALOGUE = (function () {
       description: 'Chaque langue de feu est séparée de la suivante par un jour de tissu. Les lettres hébraïques restent lisibles dans les volumes.',
       motif: { type: 'flamme' },
       variantes: [
-        v('noir', '01', 'noir', 'Noir', 'blanc', 'Flamme blanche', 'images/f_noir.webp', "Casquette noire brodée d'une flamme blanche"),
-        v('creme', '02', 'creme', 'Crème', 'orange', 'Flamme orange', 'images/f_creme.webp', "Casquette crème brodée d'une flamme orange"),
-        v('foret', '03', 'foret', 'Forêt', 'blanc', 'Flamme blanche', 'images/f_foret.webp', "Casquette vert forêt brodée d'une flamme blanche"),
-        v('marine', '04', 'marine', 'Marine', 'blanc', 'Flamme blanche', 'images/f_marine.webp', "Casquette bleu marine brodée d'une flamme blanche"),
-        v('bordeaux', '05', 'bordeaux', 'Bordeaux', 'blanc', 'Flamme blanche', 'images/f_bordeaux.webp', "Casquette bordeaux brodée d'une flamme blanche"),
-        v('sable', '06', 'sable', 'Sable', 'orange', 'Flamme orange', 'images/f_sable.webp', "Casquette sable brodée d'une flamme orange")
+        v('noir', '01', 'noir', 'Noir', 'blanc', 'Flamme blanche', 'images/photo/f_noir.webp', "Casquette noire brodée d'une flamme blanche"),
+        v('creme', '02', 'creme', 'Crème', 'orange', 'Flamme orange', 'images/photo/f_creme.webp', "Casquette crème brodée d'une flamme orange"),
+        v('foret', '03', 'foret', 'Forêt', 'blanc', 'Flamme blanche', 'images/photo/f_foret.webp', "Casquette vert forêt brodée d'une flamme blanche"),
+        v('marine', '04', 'marine', 'Marine', 'blanc', 'Flamme blanche', 'images/photo/f_marine.webp', "Casquette bleu marine brodée d'une flamme blanche"),
+        v('bordeaux', '05', 'bordeaux', 'Bordeaux', 'blanc', 'Flamme blanche', 'images/photo/f_bordeaux.webp', "Casquette bordeaux brodée d'une flamme blanche"),
+        v('sable', '06', 'sable', 'Sable', 'orange', 'Flamme orange', 'images/photo/f_sable.webp', "Casquette sable brodée d'une flamme orange")
       ]
     },
     {
@@ -62,8 +62,8 @@ window.KOVA_CATALOGUE = (function () {
       description: 'Les lettres hébraïques forment elles-mêmes les pointes.',
       motif: { type: 'image', src: 'images/a_malka.webp' },
       variantes: [
-        v('noir', '07', 'noir', 'Noir', 'blanc', 'Malka blanc', 'images/k_malka_noir.webp', 'Casquette noire brodée de la couronne Malka en blanc'),
-        v('bordeaux', '08', 'bordeaux', 'Bordeaux', 'blanc', 'Malka blanc', 'images/k_malka_bordeaux.webp', 'Casquette bordeaux brodée de la couronne Malka en blanc')
+        v('noir', '07', 'noir', 'Noir', 'blanc', 'Malka blanc', 'images/photo/k_malka_noir.webp', 'Casquette noire brodée de la couronne Malka en blanc'),
+        v('bordeaux', '08', 'bordeaux', 'Bordeaux', 'blanc', 'Malka blanc', 'images/photo/k_malka_bordeaux.webp', 'Casquette bordeaux brodée de la couronne Malka en blanc')
       ]
     },
     {
@@ -77,8 +77,8 @@ window.KOVA_CATALOGUE = (function () {
       description: 'Les lettres hébraïques forment elles-mêmes les pointes.',
       motif: { type: 'image', src: 'images/a_melech.webp' },
       variantes: [
-        v('noir', '09', 'noir', 'Noir', 'orange', 'Meller orange', 'images/k_melech_noir.webp', 'Casquette noire brodée de la couronne Meller en orange'),
-        v('marine', '10', 'marine', 'Marine', 'blanc', 'Meller blanc', 'images/k_melech_marine.webp', 'Casquette bleu marine brodée de la couronne Meller en blanc')
+        v('noir', '09', 'noir', 'Noir', 'orange', 'Meller orange', 'images/photo/k_melech_noir.webp', 'Casquette noire brodée de la couronne Meller en orange'),
+        v('marine', '10', 'marine', 'Marine', 'blanc', 'Meller blanc', 'images/photo/k_melech_marine.webp', 'Casquette bleu marine brodée de la couronne Meller en blanc')
       ]
     },
     {
@@ -92,9 +92,9 @@ window.KOVA_CATALOGUE = (function () {
       description: 'Quatre lettres, un seul geste.',
       motif: { type: 'image', src: 'images/a_ahava.webp' },
       variantes: [
-        v('noir', '11', 'noir', 'Noir', 'blanc', 'Ahava blanc', 'images/k_ahava_noir.webp', 'Casquette noire brodée du cœur Ahava en blanc'),
-        v('creme', '12', 'creme', 'Crème', 'orange', 'Ahava orange', 'images/k_ahava_creme.webp', 'Casquette crème brodée du cœur Ahava en orange'),
-        v('bordeaux', '13', 'bordeaux', 'Bordeaux', 'blanc', 'Ahava blanc', 'images/k_ahava_bordeaux.webp', 'Casquette bordeaux brodée du cœur Ahava en blanc')
+        v('noir', '11', 'noir', 'Noir', 'blanc', 'Ahava blanc', 'images/photo/k_ahava_noir.webp', 'Casquette noire brodée du cœur Ahava en blanc'),
+        v('creme', '12', 'creme', 'Crème', 'orange', 'Ahava orange', 'images/photo/k_ahava_creme.webp', 'Casquette crème brodée du cœur Ahava en orange'),
+        v('bordeaux', '13', 'bordeaux', 'Bordeaux', 'blanc', 'Ahava blanc', 'images/photo/k_ahava_bordeaux.webp', 'Casquette bordeaux brodée du cœur Ahava en blanc')
       ]
     },
     {
@@ -108,11 +108,11 @@ window.KOVA_CATALOGUE = (function () {
       description: "Rien d'autre.",
       motif: { type: 'mot', texte: 'KOVA' },
       variantes: [
-        v('noir-blanc', '14', 'noir', 'Noir', 'blanc', 'KOVA blanc', 'images/b_noir_b.webp', 'Casquette noire brodée du mot KOVA en blanc'),
-        v('noir-orange', '15', 'noir', 'Noir', 'orange', 'KOVA orange', 'images/b_noir_o.webp', 'Casquette noire brodée du mot KOVA en orange'),
-        v('marine', '16', 'marine', 'Marine', 'blanc', 'KOVA blanc', 'images/b_marine_b.webp', 'Casquette bleu marine brodée du mot KOVA en blanc'),
-        v('foret', '17', 'foret', 'Forêt', 'blanc', 'KOVA blanc', 'images/b_foret_b.webp', 'Casquette vert forêt brodée du mot KOVA en blanc'),
-        v('creme', '18', 'creme', 'Crème', 'orange', 'KOVA orange', 'images/b_creme_o.webp', 'Casquette crème brodée du mot KOVA en orange')
+        v('noir-blanc', '14', 'noir', 'Noir', 'blanc', 'KOVA blanc', 'images/photo/b_noir_b.webp', 'Casquette noire brodée du mot KOVA en blanc'),
+        v('noir-orange', '15', 'noir', 'Noir', 'orange', 'KOVA orange', 'images/photo/b_noir_o.webp', 'Casquette noire brodée du mot KOVA en orange'),
+        v('marine', '16', 'marine', 'Marine', 'blanc', 'KOVA blanc', 'images/photo/b_marine_b.webp', 'Casquette bleu marine brodée du mot KOVA en blanc'),
+        v('foret', '17', 'foret', 'Forêt', 'blanc', 'KOVA blanc', 'images/photo/b_foret_b.webp', 'Casquette vert forêt brodée du mot KOVA en blanc'),
+        v('creme', '18', 'creme', 'Crème', 'orange', 'KOVA orange', 'images/photo/b_creme_o.webp', 'Casquette crème brodée du mot KOVA en orange')
       ]
     }
   ];

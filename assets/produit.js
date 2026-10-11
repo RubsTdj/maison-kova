@@ -61,7 +61,7 @@
     '<div class="pdp-grid">' +
       '<div class="gallery">' +
         '<figure class="shot">' +
-          '<div class="lbl"><span data-no>N°' + esc(variante.no) + '</span><span>Rendu 3D</span></div>' +
+          '<div class="lbl"><span data-no>N°' + esc(variante.no) + '</span><span>Visuel non contractuel</span></div>' +
           '<div class="frame"><img data-main src="' + esc(variante.image) + '" alt="' + esc(variante.alt) + '" width="1000" height="800" fetchpriority="high"></div>' +
         '</figure>' +
         '<figure class="shot dark" data-motif style="--fil:' + variante.hexFil + '">' +

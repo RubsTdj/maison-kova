@@ -281,11 +281,12 @@ button { font: inherit; color: inherit; }
   border-right: 1px solid var(--noir); border-bottom: 1px solid var(--noir);
 }
 .tile:nth-child(even) { background: var(--tuile-b); }
-.tile .top { display: flex; justify-content: space-between; gap: 8px; padding: 12px 12px 0; font-family: var(--f-mono); font-size: 11px; letter-spacing: .08em; text-transform: uppercase; }
+.tile .top { position: absolute; z-index: 2; top: 0; left: 0; right: 0; display: flex; justify-content: space-between; gap: 8px; padding: 12px 12px 0; font-family: var(--f-mono); font-size: 11px; letter-spacing: .08em; text-transform: uppercase; pointer-events: none; }
 .tile .top span:last-child { text-align: right; }
+@media (max-width: 639px) { .tile:not(.art) .top span:last-child { display: none; } }
 .tile .img { position: relative; aspect-ratio: 5 / 4; display: flex; align-items: center; justify-content: center; overflow: hidden; }
-.tile .cap { width: 100%; height: 100%; object-fit: contain; display: block; transition: transform .6s var(--ease-out); }
-.tile:hover .cap { transform: scale(1.07) rotate(-2deg) translateY(-2%); }
+.tile .cap { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform .6s var(--ease-out); }
+.tile:hover .cap { transform: scale(1.06); }
 .tile .add {
   position: absolute; left: 0; right: 0; bottom: 0; padding: 10px 12px; background: var(--noir); color: var(--creme);
   font-family: var(--f-mono); font-size: 11px; letter-spacing: .12em;
@@ -302,7 +303,8 @@ button { font: inherit; color: inherit; }
 
 /* Tuile motif : le dessin de la broderie, à la taille d'une tuile */
 .tile.art, .tile.art:nth-child(even) { background: var(--noir); color: var(--creme); }
-.tile.art .img { padding: 12% 18%; }
+.tile.art .top { position: static; }
+.tile.art .img { padding: 6% 18% 12%; }
 .tile.art .img img { width: 100%; height: 100%; object-fit: contain; display: block; transition: transform .6s var(--ease-out); }
 .tile.art:hover .img img { transform: scale(1.06); }
 .tile.art .bar { border-top: 1px solid var(--trait-sombre); }
@@ -383,8 +385,8 @@ button { font: inherit; color: inherit; }
   font-family: var(--f-mono); font-size: 11px; letter-spacing: .08em; text-transform: uppercase;
 }
 .shot .frame { aspect-ratio: 5 / 4; display: flex; align-items: center; justify-content: center; overflow: hidden; }
-.shot .frame img { width: 100%; height: 100%; object-fit: contain; display: block; transition: opacity .35s var(--ease-out), transform .6s var(--ease-out); }
-.shot .frame img.swap { opacity: 0; transform: scale(.97) rotate(-1deg); }
+.shot .frame img { width: 100%; height: 100%; object-fit: cover; display: block; transition: opacity .35s var(--ease-out), transform .6s var(--ease-out); }
+.shot .frame img.swap { opacity: 0; transform: scale(1.03); }
 .shot.dark { background: var(--noir); color: var(--creme); }
 .shot.dark .frame { aspect-ratio: 2 / 1; }
 .shot.dark .lbl .accent { color: var(--orange); }
@@ -478,7 +480,7 @@ fieldset { border: 0; margin: 0; padding: 0; min-width: 0; }
 .drawer .lines { list-style: none; margin: 0; padding: 0; }
 .line { display: grid; grid-template-columns: 84px 1fr auto; gap: 14px; padding: 14px 20px; border-bottom: 1px solid var(--noir); align-items: start; }
 .line .thumb { display: block; aspect-ratio: 5 / 4; background: var(--tuile-a); border: 1px solid var(--noir); overflow: hidden; }
-.line .thumb img { width: 100%; height: 100%; object-fit: contain; display: block; }
+.line .thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
 .line .info { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
 .line .info a { text-decoration: none; }
 .line .info .nm { font-family: var(--f-titre); font-size: 21px; letter-spacing: .03em; text-transform: uppercase; line-height: 1; }
