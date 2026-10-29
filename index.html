@@ -4,45 +4,41 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Maison KOVA. Plus qu'un style, une vision</title>
-<meta name="description" content="Maison KOVA, Drop 01 : Tee Arche, Tee Ahava, Casquette Flamme. Trois pièces brodées. Bientôt.">
-<meta name="theme-color" content="#0A0A0A">
+<meta name="description" content="Maison KOVA : pièces brodées, esprit rock. Tee Arche, Tee Ahava, Casquette Flamme.">
+<meta name="theme-color" content="#000000">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Maison KOVA">
 <meta property="og:title" content="Maison KOVA. Plus qu'un style, une vision">
-<meta property="og:description" content="Maison KOVA, Drop 01 : Tee Arche, Tee Ahava, Casquette Flamme. Trois pièces brodées. Bientôt.">
+<meta property="og:description" content="Maison KOVA : pièces brodées, esprit rock. Tee Arche, Tee Ahava, Casquette Flamme.">
 <meta property="og:image" content="https://rubstdj.github.io/maison-kova/media/og.jpg">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Anton&family=Heebo:wght@700&family=Space+Grotesk:wght@300;400;500&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
-<link rel="preload" as="image" href="media/teaser-paysage.webp" media="(min-aspect-ratio: 4/5)">
-<link rel="preload" as="image" href="media/teaser-vertical.webp" media="(max-aspect-ratio: 4/5)">
+<link rel="preload" as="image" href="images/drop/tee-arche-plie.webp">
 <link rel="stylesheet" href="assets/kova.css">
 <script src="assets/catalogue.js" defer></script>
 <script src="assets/kova.js" defer></script>
 </head>
-<body data-home>
-<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false"><defs><symbol id="arche" viewBox="0 0 2394 2698"><path fill-rule="evenodd" d="M0 2698V1197A1197 1197 0 0 1 2394 1197V2698H1674V1261A477 477 0 0 0 720 1261V2698ZM903 1670.5a294 294 0 1 0 588 0a294 294 0 1 0 -588 0Z"/></symbol></defs></svg>
-<a class="skip" href="#drop">Aller au Drop 01</a>
+<body class="theme-noir" data-home>
+<a class="skip" href="#pieces">Aller aux pièces</a>
 
 <header class="site-header">
 <div class="bar">
-<button class="menu-btn" type="button" aria-expanded="false" aria-controls="nav-principale"><span class="burger" aria-hidden="true"></span>Menu</button>
+<button class="menu-btn" type="button" aria-expanded="false" aria-controls="nav-principale"><span class="burger" aria-hidden="true"></span><span class="menu-txt">Menu</span></button>
 <nav class="nav" id="nav-principale" aria-label="Navigation principale">
-<a class="ul" href="#drop">Drop 01</a>
+<a class="ul" href="boutique.html">Boutique</a>
 <div class="sub-links nav-mobile-only">
-<a href="produit.html?p=tee-arche">Tee Arche</a>
-<a href="produit.html?p=tee-ahava">Tee Ahava</a>
-<a href="produit.html?p=casquette-flamme">Casquette Flamme</a>
+<a href="boutique.html?c=tees">T-shirts</a>
+<a href="boutique.html?c=casquettes">Casquettes</a>
 </div>
 <a class="ul" href="maison.html">La Maison</a>
-<a class="nav-mobile-only nav-cta" href="#liste">Rejoindre la liste</a>
-<div class="nav-mobile-only nav-sign label"><svg class="arche-svg" viewBox="0 0 2394 2698" aria-hidden="true"><use href="#arche"/></svg>Plus qu'un style, une vision</div>
+<div class="nav-mobile-only nav-sign cap"><svg class="arche-svg" viewBox="0 0 2394 2698" aria-hidden="true"><path fill-rule="evenodd" d="M0 2698V1197A1197 1197 0 0 1 2394 1197V2698H1674V1261A477 477 0 0 0 720 1261V2698ZM903 1670.5a294 294 0 1 0 588 0a294 294 0 1 0 -588 0Z"/></svg>Plus qu'un style, une vision</div>
 </nav>
-<a class="logo" href="./" aria-label="Maison KOVA, accueil"><span class="mark" aria-hidden="true"><span class="maison"><span>M</span><span>A</span><span>I</span><span>S</span><span>O</span><span>N</span></span><span class="kova">KOVA</span></span></a>
+<a class="logo" href="./" aria-label="Maison KOVA, accueil"><span class="maison">MAISON</span><span class="kova">KOVA</span></a>
 <div class="header-actions">
-<a class="ul" href="#liste" data-prelancement><span class="cta-long">Rejoindre la liste</span><span class="cta-court">Liste</span></a>
+<a class="ul lien-liste" href="./#liste" data-prelancement>Liste</a>
 <button class="cart-btn ul" type="button" data-cart-open aria-haspopup="dialog" hidden><span class="cart-label">Panier</span><span class="cart-count" data-cart-count>0</span></button>
 </div>
 </div>
@@ -50,102 +46,46 @@
 
 <main id="contenu">
 
-<section class="hero" data-teaser aria-labelledby="t-hero">
-<h1 id="t-hero" class="sr-only">Maison KOVA. Plus qu'un style, une vision. Drop 01, bientôt.</h1>
-<video playsinline muted preload="metadata" poster="media/teaser-paysage.webp" aria-label="Teaser : Plus qu'un style, une vision. Maison KOVA, bientôt."></video>
-<div class="hero-ui"><div class="wrap">
-<span class="label hero-drop">Drop 01 · Bientôt</span>
-<a class="scroll-cue label" href="#drop"><span>Découvrir</span><span class="ligne" aria-hidden="true"></span></a>
-<div class="hero-ctrl label">
-<button type="button" data-lecture><span>Lecture</span></button>
-<button type="button" data-son aria-pressed="false" aria-label="Activer le son"><span>Son</span></button>
-</div>
-</div></div>
+<section class="s-hero" aria-labelledby="t-hero">
+<img src="images/drop/tee-arche-plie.webp" alt="Tee Arche : t-shirt noir plié, arche brodée en rouge" fetchpriority="high">
+<div class="bas"><div class="wrap cap"><span>Drop 01</span><a class="ul" href="boutique.html">Boutique</a></div></div>
 </section>
 
-<section class="manifeste sec" aria-labelledby="t-manifeste">
-<div class="wrap">
-<svg class="arche-svg" viewBox="0 0 2394 2698" aria-hidden="true"><use href="#arche"/></svg>
-<h2 id="t-manifeste" class="h-display rvl">Plus qu'un style.<br><span class="accent">Une vision.</span></h2>
-<p class="texte rv"><strong>Kova, <bdi class="he" lang="he">כובע</bdi> : la casquette, en hébreu.</strong> Tout est parti d'elle, et d'une flamme brodée dessus. Le nom est resté. Le Drop 01 ajoute deux tees et une signature : l'arche.</p>
-<a class="link-arr rv" href="maison.html">La Maison <span class="arr" aria-hidden="true">→</span></a>
-</div>
+<section class="s-statement">
+<h1 id="t-hero">Plus qu'un style<br>Une vision</h1>
 </section>
 
-<section id="drop" class="sec" style="padding-top:0" aria-labelledby="t-drop">
-<div class="wrap">
-<div class="sec-head">
-<div><div class="eyebrow">Drop 01</div><h2 id="t-drop" class="h-xl rvl">Trois pièces.</h2></div>
-<p class="note label rv">Brodées · Bientôt</p>
-</div>
-<div class="cards" data-produits="tous"><noscript><p class="texte">Activez JavaScript pour voir les pièces.</p></noscript></div>
-</div>
+<section id="pieces" aria-label="Les pièces">
+<div class="s-pieces" data-produits="tous" data-style="silence"></div>
+<div class="s-cta cap"><a class="lien" href="boutique.html">Entrer dans la boutique</a></div>
 </section>
 
-<figure class="bleed" aria-labelledby="t-bleed">
-<img src="images/drop/arche-gros-plan.webp" alt="Gros plan sur l'arche brodée en relief, fil rouge sur coton noir" loading="lazy" width="973" height="1104">
-<figcaption class="over"><div class="wrap">
-<h2 id="t-bleed" class="h-xl">Brodé,<br>pas imprimé.</h2>
-<span class="label">Fil rouge · Arche 5 × 8,7 cm</span>
-</div></figcaption>
+<figure class="s-full">
+<img src="images/drop/arche-chaine.webp" alt="L'arche brodée en rouge, portée, une chaîne dorée au col" loading="lazy">
 </figure>
 
-<section class="sec" aria-labelledby="t-craft">
-<div class="wrap craft-grid">
-<div class="txt">
-<div class="eyebrow rv">Le savoir-faire</div>
-<h2 id="t-craft" class="h-l rvl">Point par point.</h2>
-<p class="texte rv">Chaque motif est cousu, pas imprimé. Le fil donne du relief au dessin et accroche la lumière. Les tailles et les placements sont fixés au millimètre, pièce par pièce.</p>
-<dl class="spec-table rv">
-<div><dt>Tee Arche</dt><dd>5 × 8,7 cm, centré</dd></div>
-<div><dt>Tee Ahava</dt><dd>6 × 7,5 cm, poitrine gauche</dd></div>
-<div><dt>Casquette</dt><dd>Flamme 5,5 cm, KOVA 4 cm</dd></div>
-</dl>
-<a class="link-arr rv" href="maison.html#broderie">Les dessins cotés <span class="arr" aria-hidden="true">→</span></a>
-</div>
-<figure class="craft-media rvi"><video data-boucle muted loop playsinline preload="none" poster="media/broderie.webp" aria-label="L'arche en train d'être brodée en fil rouge"><source src="media/broderie.mp4" type="video/mp4"></video></figure>
-</div>
+<section class="s-text">
+<p>Coton. Fil rouge, fil bordeaux. Chaque motif brodé point par point, rien d'imprimé.</p>
+<a class="lien cap" href="maison.html">La Maison</a>
 </section>
 
-<section id="liste" class="liste sec" aria-labelledby="t-liste">
-<div class="wrap">
-<svg class="arche-svg" viewBox="0 0 2394 2698" aria-hidden="true"><use href="#arche"/></svg>
-<div class="eyebrow">Drop 01 · Bientôt</div>
-<h2 id="t-liste" class="h-xl rvl">Rejoindre<br>la liste.</h2>
-<p class="texte rv">Un seul e-mail, le jour de la sortie. Rien d'autre.</p>
-<form class="rv" data-waitlist novalidate>
-<fieldset class="interets"><legend class="label">Pièces qui vous intéressent (facultatif)</legend><label class="chip-check"><input type="checkbox" name="produits" value="tee-arche"><span>Tee Arche</span></label><label class="chip-check"><input type="checkbox" name="produits" value="tee-ahava"><span>Tee Ahava</span></label><label class="chip-check"><input type="checkbox" name="produits" value="casquette-flamme"><span>Casquette Flamme</span></label></fieldset>
+<section id="liste" class="s-liste" aria-labelledby="t-liste">
+<h2 id="t-liste">Liste</h2>
+<p class="sous">Les prochaines pièces, en premier.</p>
+<form data-waitlist novalidate>
 <label class="sr-only" for="email-liste">Adresse e-mail</label>
-<div class="ligne-form">
-<input id="email-liste" name="email" type="email" autocomplete="email" required placeholder="Adresse e-mail">
-<button class="label" type="submit">Rejoindre <span class="arr" aria-hidden="true">→</span></button>
-</div>
+<div class="ligne-form"><input id="email-liste" name="email" type="email" autocomplete="email" required placeholder="E-mail"><button type="submit">S'inscrire</button></div>
 <p class="hint">Désinscription en un clic. <a href="legal.html#confidentialite">Confidentialité</a></p>
 <p class="status" role="status" aria-live="polite"></p>
 </form>
-</div>
 </section>
 
 </main>
 
-<footer class="site-footer">
-<div class="wrap f-grid">
-<div class="f-brand">
-<a class="lockup" href="./" aria-label="Maison KOVA, accueil"><svg class="arche-svg" viewBox="0 0 2394 2698" aria-hidden="true"><use href="#arche"/></svg><span class="logo"><span class="mark" aria-hidden="true"><span class="maison"><span>M</span><span>A</span><span>I</span><span>S</span><span>O</span><span>N</span></span><span class="kova">KOVA</span></span></span></a>
-<div class="sign label">Plus qu'un style, une vision</div>
-</div>
-<div class="f-col"><h2 class="label">La maison</h2><ul>
-<li><a href="#drop">Drop 01</a></li>
-<li><a href="maison.html">La Maison</a></li>
-<li><a href="#liste">Rejoindre la liste</a></li>
-</ul></div>
-<div class="f-col"><h2 class="label">Informations</h2><ul>
-<li><a href="legal.html#mentions">Mentions légales</a></li>
-<li><a href="legal.html#confidentialite">Confidentialité</a></li>
-</ul></div>
-</div>
-<div class="wrap f-meta label"><span>Visuels non contractuels, avant production</span><span>© 2026 Maison KOVA</span></div>
-<div class="f-arches" aria-hidden="true"></div>
+<footer class="foot-s cap">
+<svg class="arche-svg" viewBox="0 0 2394 2698" aria-hidden="true"><path fill-rule="evenodd" d="M0 2698V1197A1197 1197 0 0 1 2394 1197V2698H1674V1261A477 477 0 0 0 720 1261V2698ZM903 1670.5a294 294 0 1 0 588 0a294 294 0 1 0 -588 0Z"/></svg>
+<nav aria-label="Pied de page"><a href="boutique.html">Boutique</a><a href="maison.html">La Maison</a><a href="legal.html#mentions">Mentions légales</a><a href="legal.html#confidentialite">Confidentialité</a></nav>
+<span>Maison KOVA · 2026</span>
 </footer>
 
 </body>

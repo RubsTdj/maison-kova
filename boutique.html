@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Boutique. Maison KOVA</title>
+<meta name="description" content="La boutique Maison KOVA : t-shirts et casquettes brodés.">
+<meta name="theme-color" content="#ECE7DB">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Maison KOVA">
+<meta property="og:title" content="Boutique. Maison KOVA">
+<meta property="og:description" content="La boutique Maison KOVA : t-shirts et casquettes brodés.">
+<meta property="og:image" content="https://rubstdj.github.io/maison-kova/media/og.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Heebo:wght@700&family=Space+Grotesk:wght@300;400;500&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/kova.css">
+<script src="assets/catalogue.js" defer></script>
+<script src="assets/kova.js" defer></script>
+</head>
+<body class="theme-clair">
+<a class="skip" href="#grille">Aller aux pièces</a>
+
+<header class="site-header">
+<div class="bar">
+<button class="menu-btn" type="button" aria-expanded="false" aria-controls="nav-principale"><span class="burger" aria-hidden="true"></span><span class="menu-txt">Menu</span></button>
+<nav class="nav" id="nav-principale" aria-label="Navigation principale">
+<a class="ul" href="boutique.html" aria-current="page">Boutique</a>
+<div class="sub-links nav-mobile-only">
+<a href="boutique.html?c=tees">T-shirts</a>
+<a href="boutique.html?c=casquettes">Casquettes</a>
+</div>
+<a class="ul" href="maison.html">La Maison</a>
+<div class="nav-mobile-only nav-sign cap"><svg class="arche-svg" viewBox="0 0 2394 2698" aria-hidden="true"><path fill-rule="evenodd" d="M0 2698V1197A1197 1197 0 0 1 2394 1197V2698H1674V1261A477 477 0 0 0 720 1261V2698ZM903 1670.5a294 294 0 1 0 588 0a294 294 0 1 0 -588 0Z"/></svg>Plus qu'un style, une vision</div>
+</nav>
+<a class="logo" href="./" aria-label="Maison KOVA, accueil"><span class="maison">MAISON</span><span class="kova">KOVA</span></a>
+<div class="header-actions">
+<a class="ul lien-liste" href="./#liste" data-prelancement>Liste</a>
+<button class="cart-btn ul" type="button" data-cart-open aria-haspopup="dialog" hidden><span class="cart-label">Panier</span><span class="cart-count" data-cart-count>0</span></button>
+</div>
+</div>
+</header>
+
+<main id="contenu">
+<div class="wrap">
+<div class="shop-head">
+<div style="display:flex;flex-direction:column;gap:18px"><span class="mono" style="color:var(--fg-3)">Drop 01</span><h1>Boutique</h1></div>
+<span class="mono meta" data-compte>3 pièces</span>
+</div>
+<div class="filtres" data-filtres aria-label="Filtrer par catégorie" role="group"></div>
+<div id="grille" class="p-grid" data-produits="tous" data-grille-boutique><noscript><p>Activez JavaScript pour voir les pièces.</p></noscript></div>
+<div class="rassure">
+<div><strong>Brodé, pas imprimé</strong><span>Chaque motif est cousu point par point, en relief.</span></div>
+<div><strong>100 % coton</strong><span>Pour les tees. Entretien simple, lavage à 30 °C.</span></div>
+<div><strong>14 jours pour changer d'avis</strong><span>À compter de la réception de votre commande.</span></div>
+</div>
+</div>
+</main>
+
+<footer class="foot-c">
+<div class="wrap grid">
+<div class="news">
+<h2>Nouveautés</h2>
+<p>Les prochaines pièces, en premier. Un e-mail quand il y a du nouveau, rien d'autre.</p>
+<form data-waitlist novalidate>
+<label class="sr-only" for="email-news">Adresse e-mail</label>
+<div class="ligne-form"><input id="email-news" name="email" type="email" autocomplete="email" required placeholder="Adresse e-mail"><button type="submit">S'inscrire</button></div>
+<p class="status" role="status" aria-live="polite"></p>
+</form>
+</div>
+<div><h2>Boutique</h2><ul><li><a href="boutique.html">Tout voir</a></li><li><a href="boutique.html?c=tees">T-shirts</a></li><li><a href="boutique.html?c=casquettes">Casquettes</a></li></ul></div>
+<div><h2>Maison</h2><ul><li><a href="./">Accueil</a></li><li><a href="maison.html">La Maison</a></li></ul></div>
+<div><h2>Informations</h2><ul><li><a href="legal.html#mentions">Mentions légales</a></li><li><a href="legal.html#confidentialite">Confidentialité</a></li></ul></div>
+</div>
+<div class="wrap bas"><span style="display:inline-flex;align-items:center;gap:12px"><svg class="arche-svg" viewBox="0 0 2394 2698" aria-hidden="true"><path fill-rule="evenodd" d="M0 2698V1197A1197 1197 0 0 1 2394 1197V2698H1674V1261A477 477 0 0 0 720 1261V2698ZM903 1670.5a294 294 0 1 0 588 0a294 294 0 1 0 -588 0Z"/></svg>© 2026 Maison KOVA</span><span>Visuels non contractuels, avant production</span></div>
+</footer>
+
+</body>
+</html>

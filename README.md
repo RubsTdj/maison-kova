@@ -2,11 +2,16 @@
 
 Site de la marque Maison KOVA. Signature : « Plus qu'un style, une vision ». HTML, CSS et JavaScript purs : aucun framework, aucun build. Les polices viennent de Google Fonts.
 
-Registre : luxe streetwear. Noir profond, beaucoup d'espace, grandes images, orange rare (marque et action principale), textes au vouvoiement.
+Deux thèmes, une même marque, textes au vouvoiement :
+
+- **Luxe silencieux (noir)** pour raconter la marque : accueil et La Maison. Noir pur, typographie fine en capitales espacées, presque pas de texte, très grandes images.
+- **Maison éditoriale (crème)** pour acheter : boutique, fiches produit, panier, pages d'information. Fond lumineux, codes e-commerce classiques, parcours évident jusqu'au paiement.
+
+Le thème se choisit par la classe du `<body>` : `theme-noir` ou `theme-clair`.
 
 En ligne (GitHub Pages) : https://rubstdj.github.io/maison-kova/
 
-## État : pré-lancement du Drop 01
+## Le Drop 01
 
 Trois pièces, toutes brodées :
 
@@ -16,15 +21,17 @@ Trois pièces, toutes brodées :
 | Tee Ahava (t-shirt blanc) | Cœur Ahava + KOVA, 6 × 7,5 cm, poitrine gauche | Bordeaux #8F222C |
 | Casquette Flamme (noire) | Flamme 5,5 cm devant, KOVA 4 cm côté gauche | Rouge #C72B23 |
 
-Pas de vente pour l'instant : chaque fiche propose « M'avertir de la sortie », avec la taille choisie (utile pour caler les quantités à produire). Le panier existe dans le code mais reste masqué.
+Le parcours d'achat est actif (`venteOuverte: true`) pour pouvoir le tester. Les prix ne sont pas encore fixés (« Prix à venir ») et le paiement n'est pas branché : « Passer au paiement » l'indique honnêtement.
 
 ## Pages et parcours
 
-- **Accueil** (`index.html`) : teaser vidéo plein écran (vertical sur mobile, paysage sur desktop, son activable, le logo du header apparaît après le teaser) > manifeste > Drop 01 (3 cartes) > plein cadre « Brodé, pas imprimé » > savoir-faire > rejoindre la liste.
-- **Fiche produit** (`produit.html?p=tee-arche&t=m`) : galerie, taille, « Me prévenir », détails de broderie, entretien, guide des tailles, livraison, le reste du drop.
-- **La Maison** (`maison.html`) : origine du nom, les trois signes, les dessins cotés au millimètre.
-- **Mentions légales et confidentialité** (`legal.html`) : modèle à compléter.
-- **Menu** : Drop 01 (et les 3 pièces en accès direct sur mobile), La Maison, Rejoindre la liste.
+- **Accueil** (`index.html`, noir) : photo plein écran > « Plus qu'un style, une vision » > les 3 pièces en grand > « Entrer dans la boutique » > photo portée > un paragraphe > liste.
+- **Boutique** (`boutique.html`, clair) : tout le catalogue, filtres par catégorie (`?c=tees`, `?c=casquettes`), prix visibles, réassurance.
+- **Fiche produit** (`produit.html?p=tee-arche&t=m`, clair) : fil d'Ariane, galerie, prix, couleur et fil, taille (erreur claire si oubliée), « Ajouter au panier », barre d'achat fixe sur mobile, détails, « Vous aimerez aussi ».
+- **Panier** : tiroir latéral clair sur toutes les pages, confirmation d'ajout, quantités, sous-total, « Passer au paiement », « Continuer mes achats ».
+- **La Maison** (`maison.html`, noir) : origine du nom, teaser vidéo, les trois signes, les dessins cotés.
+- **Mentions légales et confidentialité** (`legal.html`, clair) : modèle à compléter.
+- **Menu** : Boutique (T-shirts, Casquettes), La Maison, Panier toujours visible.
 
 ## Fichiers
 
@@ -32,7 +39,7 @@ Pas de vente pour l'instant : chaque fiche propose « M'avertir de la sortie »,
 | --- | --- |
 | `assets/catalogue.js` | **Source unique** des pièces : textes, tailles, broderies, visuels, prix |
 | `assets/kova.css` | Toute la DA (couleurs, typos, composants) |
-| `assets/kova.js` | Cartes, menu, teaser vidéo, liste d'attente, panier, et l'interrupteur `venteOuverte` |
+| `assets/kova.js` | Cartes (accueil et boutique), filtres, menu, teaser vidéo, inscriptions, panier, et l'interrupteur `venteOuverte` |
 | `assets/produit.js` | Rendu et interactions de la fiche produit |
 | `media/` | Teasers compressés (1,5 Mo chacun), boucles de broderie, images d'attente, image de partage `og.jpg` |
 | `images/drop/` | Visuels des pièces, gros plans, motifs brodés, dessins cotés |
@@ -40,10 +47,10 @@ Pas de vente pour l'instant : chaque fiche propose « M'avertir de la sortie »,
 
 ## Modifier
 
-- **Prix** : champ `prix` de chaque pièce dans `assets/catalogue.js`. Tant qu'il vaut `null`, le site affiche « Prix au lancement ».
+- **Prix** : champ `prix` de chaque pièce dans `assets/catalogue.js` (en euros TTC). Tant qu'il vaut `null`, le site affiche « Prix à venir ».
 - **Tailles** : `TAILLES_TEE` en haut de `assets/catalogue.js` (S à XL, **provisoire**).
-- **Ouvrir la vente** : `venteOuverte: true` dans `assets/kova.js`. Le bouton Panier remplace « Me prévenir » et les fiches affichent « Ajouter au panier ». Il faut d'abord des prix et un paiement (voir Phase 2).
-- **Textes à compléter** (entre crochets sur le site) : e-mail de contact, liens Instagram et TikTok, guide des tailles, livraison et retours, composition de la casquette, mentions légales.
+- **Vente ou pré-lancement** : `venteOuverte` dans `assets/kova.js`. À `true`, parcours d'achat complet. À `false`, le panier disparaît et les fiches proposent « M'avertir de la sortie » avec la taille. Avant une mise en ligne publique en `true`, il faut des prix et un paiement (voir Phase 2).
+- **À compléter** : prix, mesures du guide des tailles, délais et frais de livraison, composition de la casquette, mentions légales (entre crochets), e-mail de contact et réseaux sociaux.
 
 Conversion WebP (Python + Pillow) :
 
@@ -53,7 +60,7 @@ python3 -c "from PIL import Image; import sys; [Image.open(f).save(f[:-4]+'.webp
 
 ## Visuels
 
-- **Cartes** : chaque pièce est présentée par son motif brodé sur la couleur du tissu (champ `motif`), et par son visuel au survol (`survol`). Les trois cartes restent cohérentes tant qu'il n'y a pas de photos.
+- **Cartes** : `image` (photo principale) et `survol` (gros plan de la broderie, affiché au survol). Le champ `motif` (l'œuvre brodée seule) sert sur La Maison.
 - **Dessins cotés** (`images/drop/dessin-tee-*.webp`) : silhouettes au trait avec les vrais logos, à l'échelle des fiches techniques (5 unités = 1 cm). Ils remplacent les fiches techniques d'origine.
 - **Casquette** : rendu existant, flamme repassée en rouge, posé sur un fond studio sombre.
 - **Tees** : les deux tees ont une photo pliée dans la même mise en scène (pierre sombre). La broderie du tee blanc est déjà au bordeaux des fiches (#8C2C39 mesuré pour #8F222C visé), elle n'a pas été retouchée.
