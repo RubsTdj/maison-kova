@@ -124,13 +124,41 @@ html.is-scrolled [data-home] .site-header, [data-home] .site-header.menu-open { 
 /* =====================================================================
    THÈME NOIR : luxe silencieux (accueil, La Maison)
    ===================================================================== */
-.s-hero { position: relative; height: 100svh; min-height: 600px; background: var(--bg-2); overflow: hidden; }
-/* Cadrage : l'arche au centre, l'étiquette de col de la photo hors champ (sinon elle double le logo du header) */
-.s-hero img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 74%; }
-@media (max-aspect-ratio: 1/1) { .s-hero img { object-position: 30% 50%; } }
-.s-hero .bas { position: absolute; left: 0; right: 0; bottom: 0; z-index: 2; }
-.s-hero .bas .wrap { display: flex; justify-content: space-between; align-items: flex-end; gap: 16px; padding-bottom: clamp(24px, 3vw, 40px); }
-.s-hero .bas a { text-decoration: none; }
+/* ---------- Intro : l'arche se dessine au chargement (une fois par session, accueil seulement) ---------- */
+.intro { position: fixed; inset: 0; z-index: 90; background: #000; display: grid; place-items: center; cursor: pointer; animation: introFin .8s var(--ease) 2.15s forwards; }
+.intro.fini { animation: introFin .35s ease forwards; }
+.intro .marque { position: relative; display: block; }
+.intro svg { display: block; height: var(--arche-h); width: auto; overflow: visible; }
+.intro path { fill: var(--orange); fill-opacity: 0; stroke: var(--orange); stroke-width: 1.5; vector-effect: non-scaling-stroke; stroke-dasharray: 1; stroke-dashoffset: 1; animation: trace 1.3s cubic-bezier(.65, 0, .35, 1) .15s forwards, remplir .55s ease 1.3s forwards; }
+.intro .mot { position: absolute; left: 50%; top: calc(100% + 32px); transform: translateX(-50%); white-space: nowrap; color: var(--fg); font-size: 11px; letter-spacing: .6em; margin-right: -.6em; opacity: 0; animation: apparait .7s ease 1.45s forwards; }
+@keyframes trace { to { stroke-dashoffset: 0; } }
+@keyframes remplir { to { fill-opacity: 1; } }
+@keyframes apparait { to { opacity: 1; } }
+@keyframes introFin { to { opacity: 0; visibility: hidden; } }
+.sans-intro .intro { display: none; }
+
+/* ---------- Haut de page : la porte. On entre dans l'arche, la broderie derrière ---------- */
+:root { --arche-h: min(40svh, 62vw * 2698 / 2394); }
+.porte { position: relative; height: 320svh; background: #000; }
+.porte-vue { position: sticky; top: 0; height: 100svh; overflow: hidden; }
+.porte-zoom { position: absolute; left: 50%; top: 50%; height: var(--arche-h); aspect-ratio: 2394 / 2698; transform: translate(-50%, -50%) scale(var(--s, 1)); transform-origin: 50% 46.74%; }
+.porte-ouverture { position: absolute; left: 30.075%; top: 29.058%; width: 39.85%; height: 70.942%; border-radius: 50% 50% 0 0 / 24.92% 24.92% 0 0; overflow: hidden; background: var(--noir-video); }
+.porte-ouverture video { position: absolute; left: 50%; top: 24.92%; width: var(--mw, 640px); height: var(--mh, 360px); max-width: none; object-fit: cover; transform: translate(-50%, -50%) scale(var(--c, 1)); }
+.porte-voile { position: absolute; inset: 0; background: #000; opacity: calc(var(--p, 0) * .6); }
+.porte-arche { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+.porte-arche .bande { fill: var(--orange); }
+.porte-arche .point { fill: var(--orange); opacity: calc(1 - var(--p, 0) * 5); }
+.porte-titre { position: absolute; inset: 0; display: grid; place-items: center; text-align: center; padding: 0 var(--gut); pointer-events: none; opacity: clamp(0, calc((var(--p, 0) - .7) * 5), 1); }
+.porte-titre h1 { margin: 0; font-size: 13px; font-weight: 300; letter-spacing: .42em; text-transform: uppercase; line-height: 2.2; }
+.porte-titre p { margin: 0 0 22px; color: var(--fg-2); }
+.porte-entrer { position: absolute; left: 50%; bottom: clamp(20px, 4svh, 44px); transform: translateX(-50%); display: flex; flex-direction: column; align-items: center; gap: 14px; text-decoration: none; opacity: calc(1 - var(--p, 0) * 6); }
+.porte-entrer .ligne { width: 1px; height: 44px; background: var(--line-2); position: relative; overflow: hidden; }
+.porte-entrer .ligne::after { content: ""; position: absolute; left: 0; right: 0; top: -100%; height: 100%; background: var(--orange); animation: cue 2.4s var(--ease) infinite; }
+@keyframes cue { to { top: 100%; } }
+/* Sans mouvement : la porte reste fermée, le titre s'affiche sous l'arche */
+.porte.statique { height: 100svh; }
+.porte.statique .porte-titre { opacity: 1; place-items: end center; padding-bottom: 9svh; }
+.porte.statique .porte-entrer { display: none; }
 
 .s-statement { padding: clamp(140px, 16vw, 240px) var(--gut); text-align: center; }
 .s-statement h1, .s-statement h2, .s-statement p.cap { margin: 0; font-size: 13px; font-weight: 300; letter-spacing: .42em; text-transform: uppercase; line-height: 2.2; }
@@ -382,4 +410,5 @@ fieldset { border: 0; margin: 0; padding: 0; min-width: 0; }
 }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+  .intro { display: none; }
 }

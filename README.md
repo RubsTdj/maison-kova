@@ -25,7 +25,10 @@ Le parcours d'achat est actif (`venteOuverte: true`). Le paiement passe par **Sh
 
 ## Pages et parcours
 
-- **Accueil** (`index.html`, noir) : photo plein écran > « Plus qu'un style, une vision » > les 3 pièces en grand > « Entrer dans la boutique » > photo portée > un paragraphe > liste.
+- **Accueil** (`index.html`, noir) :
+  - **Chargement** : l'arche se dessine au trait orange, se remplit, puis « MAISON KOVA » apparaît (2,5 s, une fois par session, clic pour passer, absent si l'utilisateur limite les animations).
+  - **La porte** : l'arche reste au centre, la vidéo de broderie se voit à travers son ouverture. En faisant défiler, on entre dans l'arche jusqu'à la broderie en plein écran, puis « Plus qu'un style, une vision » apparaît (`initPorte` dans `kova.js`).
+  - Puis les 3 pièces en grand > « Entrer dans la boutique » > photo portée > un paragraphe > liste.
 - **Boutique** (`boutique.html`, clair) : tout le catalogue, filtres par catégorie (`?c=tees`, `?c=casquettes`), prix visibles, réassurance.
 - **Fiche produit** (`produit.html?p=tee-arche&t=m`, clair) : fil d'Ariane, galerie, prix, couleur et fil, taille (erreur claire si oubliée), « Ajouter au panier », barre d'achat fixe sur mobile, détails, « Vous aimerez aussi ».
 - **Panier** : tiroir latéral clair sur toutes les pages, confirmation d'ajout, quantités, sous-total, « Passer au paiement », « Continuer mes achats ».

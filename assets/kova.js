@@ -446,11 +446,72 @@
     majCompteur(false);
   }
 
+  /* ---------- Intro : clic pour passer, puis retrait du DOM ---------- */
+  function initIntro() {
+    var intro = document.querySelector('.intro');
+    if (!intro) return;
+    function retirer() { if (intro.parentNode) intro.parentNode.removeChild(intro); }
+    if (reduitMouvement || document.documentElement.classList.contains('sans-intro')) { retirer(); return; }
+    intro.addEventListener('click', function () { intro.classList.add('fini'); });
+    intro.addEventListener('animationend', function (e) { if (e.target === intro) retirer(); });
+    setTimeout(retirer, 4000); // filet de sécurité
+  }
+
+  /* ---------- La porte (haut de l'accueil) ----------
+     On fait défiler : l'arche grandit autour du centre de son ouverture jusqu'à remplir l'écran.
+     La vidéo de broderie, vue à travers l'ouverture, passe de la taille de la porte au plein écran.
+     Zoom géométrique (vitesse perçue constante), terminé à 80 % du défilement ; le titre apparaît à la fin. */
+  function initPorte() {
+    var porte = document.querySelector('[data-porte]');
+    if (!porte) return;
+    var vue = porte.querySelector('.porte-vue');
+    var zoom = porte.querySelector('.porte-zoom');
+    var video = porte.querySelector('video');
+    if (reduitMouvement) { porte.classList.add('statique'); return; }
+    var sFin = 10, m0 = 1, attente = false;
+    var W = 0, H = 0, oy = 0, ow = 0, oh = 0, mw = 0, mh = 0;
+
+    function mesurer() {
+      W = vue.clientWidth; H = vue.clientHeight;
+      var hA = zoom.offsetHeight, k = hA / 2698;           // pixels par unité du dessin de l'arche
+      var rayon = 477 * k;                                  // rayon de l'ouverture (haut arrondi)
+      oy = H / 2 - hA * 0.0326;                             // centre du zoom à l'écran
+      ow = 954 * k; oh = 1914 * k;                          // ouverture à l'échelle 1
+      var dx = W / 2, dy = Math.max(oy, H - oy);
+      sFin = (Math.sqrt(dx * dx + dy * dy) + 24) / rayon;   // l'arrondi doit dépasser les coins de l'écran
+      var ratio = 16 / 9;                                   // vidéo en plein écran à la fin
+      if (W / H > ratio) { mw = W; mh = W / ratio; } else { mh = H; mw = H * ratio; }
+      m0 = Math.min(1, (1.5 * oh) / mh);                    // au départ, la vidéo couvre juste l'ouverture
+      porte.style.setProperty('--mw', mw + 'px');
+      porte.style.setProperty('--mh', mh + 'px');
+    }
+    function maj() {
+      attente = false;
+      var total = porte.offsetHeight - vue.clientHeight;
+      var p = Math.min(1, Math.max(0, -porte.getBoundingClientRect().top / total));
+      var q = Math.min(1, p / 0.8);
+      var s = Math.pow(sFin, q);
+      // La vidéo doit toujours remplir la partie visible de l'ouverture (sinon une bande noire apparaît en bas)
+      var haut = Math.max(0, oy - 0.2492 * oh * s), bas = Math.min(H, oy + 0.7508 * oh * s);
+      var besoin = Math.max(2 * Math.max(oy - haut, bas - oy) / mh, Math.min(ow * s, W) / mw);
+      var m = Math.max(m0 * Math.pow(1 / m0, q), besoin);
+      porte.style.setProperty('--p', p.toFixed(4));
+      porte.style.setProperty('--s', s.toFixed(4));
+      porte.style.setProperty('--c', (m / s).toFixed(5));
+    }
+    mesurer(); maj();
+    window.addEventListener('scroll', function () { if (!attente) { attente = true; requestAnimationFrame(maj); } }, { passive: true });
+    window.addEventListener('resize', function () { mesurer(); maj(); });
+    if (video) { video.muted = true; video.play().catch(function () {}); }
+  }
+
   /* ---------- Démarrage ---------- */
   window.KOVA = { config: CONFIG, prix: prix, esc: esc, url: url, carte: carte, panier: panier, track: track, brancherListe: brancherListe, initBoucles: initBoucles, pret: false };
 
   // Démarrage : on attend les prix et stocks Shopify (s'ils sont branchés) avant d'afficher les pièces
   function init() {
+    initIntro();
+    initPorte();
     var shopify = window.KOVA_SHOPIFY ? window.KOVA_SHOPIFY.pret : Promise.resolve(false);
     shopify.then(demarrer, demarrer);
   }

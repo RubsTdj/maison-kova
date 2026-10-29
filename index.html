@@ -16,7 +16,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Anton&family=Heebo:wght@700&family=Space+Grotesk:wght@300;400;500&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
-<link rel="preload" as="image" href="images/drop/tee-arche-plie.webp">
+<script>try{if(sessionStorage.getItem('kova.intro'))document.documentElement.classList.add('sans-intro');else sessionStorage.setItem('kova.intro','1')}catch(e){}</script>
+<link rel="preload" as="image" href="media/broderie.webp">
 <link rel="stylesheet" href="assets/kova.css">
 <script src="assets/catalogue.js" defer></script>
 <script src="assets/shopify.js" defer></script>
@@ -24,6 +25,7 @@
 </head>
 <body class="theme-noir" data-home>
 <a class="skip" href="#pieces">Aller aux pièces</a>
+<div class="intro" aria-hidden="true"><div class="marque"><svg viewBox="0 0 2394 2698"><path pathLength="1" fill-rule="evenodd" d="M0 2698V1197A1197 1197 0 0 1 2394 1197V2698H1674V1261A477 477 0 0 0 720 1261V2698ZM903 1670.5a294 294 0 1 0 588 0a294 294 0 1 0 -588 0Z"/></svg><span class="mot">MAISON KOVA</span></div></div>
 
 <header class="site-header">
 <div class="bar">
@@ -47,13 +49,15 @@
 
 <main id="contenu">
 
-<section class="s-hero" aria-labelledby="t-hero">
-<img src="images/drop/tee-arche-plie.webp" alt="Tee Arche : t-shirt noir plié, arche brodée en rouge" fetchpriority="high">
-<div class="bas"><div class="wrap cap"><span>Drop 01</span><a class="ul" href="boutique.html">Boutique</a></div></div>
-</section>
-
-<section class="s-statement">
-<h1 id="t-hero">Plus qu'un style<br>Une vision</h1>
+<section class="porte" data-porte aria-labelledby="t-hero">
+<div class="porte-vue">
+<div class="porte-zoom">
+<div class="porte-ouverture"><video muted loop playsinline preload="auto" poster="media/broderie.webp" aria-hidden="true"><source src="media/broderie.mp4" type="video/mp4"></video><span class="porte-voile"></span></div>
+<svg class="porte-arche" viewBox="0 0 2394 2698" aria-hidden="true"><path class="bande" d="M0 2698V1197A1197 1197 0 0 1 2394 1197V2698H1674V1261A477 477 0 0 0 720 1261V2698Z"/><path class="point" d="M903 1670.5a294 294 0 1 0 588 0a294 294 0 1 0 -588 0Z"/></svg>
+</div>
+<div class="porte-titre"><div><p class="cap">Drop 01</p><h1 id="t-hero">Plus qu'un style<br>Une vision</h1></div></div>
+<a class="porte-entrer cap" href="#pieces"><span>Entrer</span><span class="ligne" aria-hidden="true"></span></a>
+</div>
 </section>
 
 <section id="pieces" aria-label="Les pièces">
