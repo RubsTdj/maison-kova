@@ -253,18 +253,6 @@ html.is-scrolled [data-home] .site-header .logo, [data-home] .site-header.menu-o
 .cap-specs .shot { aspect-ratio: 16 / 9; }
 @media (max-width: 900px) { .cap-specs { grid-template-columns: 1fr; } }
 
-.details-grid { display: grid; grid-template-columns: 1.2fr 1fr 1fr; gap: clamp(12px, 1.4vw, 24px); }
-.details-grid figure { margin: 0; display: flex; flex-direction: column; gap: 14px; }
-.details-grid .vis { position: relative; background: var(--noir-2); aspect-ratio: 1 / 1; overflow: hidden; }
-.details-grid .vis img { position: absolute; inset: 16%; width: 68%; height: 68%; object-fit: contain; display: block; }
-.details-grid .vis.photo img { inset: 0; width: 100%; height: 100%; object-fit: cover; }
-.details-grid .grand { grid-row: span 2; }
-.details-grid .grand .vis { aspect-ratio: auto; flex: 1; min-height: 420px; }
-.details-grid figcaption { display: flex; justify-content: space-between; gap: 10px; color: var(--gris-2); }
-@media (max-width: 900px) {
-  .details-grid { grid-template-columns: 1fr 1fr; }
-  .details-grid .grand { grid-column: 1 / -1; grid-row: auto; }
-}
 .cta-band { text-align: center; }
 .cta-band .wrap { display: flex; flex-direction: column; align-items: center; gap: 40px; }
 .cta-band .actions { display: flex; flex-wrap: wrap; justify-content: center; gap: 14px; }

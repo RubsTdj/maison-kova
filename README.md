@@ -22,7 +22,7 @@ Pas de vente pour l'instant : chaque fiche propose « M'avertir de la sortie »,
 
 - **Accueil** (`index.html`) : teaser vidéo plein écran (vertical sur mobile, paysage sur desktop, son activable, le logo du header apparaît après le teaser) > manifeste > Drop 01 (3 cartes) > plein cadre « Brodé, pas imprimé » > savoir-faire > rejoindre la liste.
 - **Fiche produit** (`produit.html?p=tee-arche&t=m`) : galerie, taille, « Me prévenir », détails de broderie, entretien, guide des tailles, livraison, le reste du drop.
-- **La Maison** (`maison.html`) : origine du nom, les trois signes, les dessins cotés au millimètre, étiquettes et packaging.
+- **La Maison** (`maison.html`) : origine du nom, les trois signes, les dessins cotés au millimètre.
 - **Mentions légales et confidentialité** (`legal.html`) : modèle à compléter.
 - **Menu** : Drop 01 (et les 3 pièces en accès direct sur mobile), La Maison, Rejoindre la liste.
 
@@ -35,7 +35,7 @@ Pas de vente pour l'instant : chaque fiche propose « M'avertir de la sortie »,
 | `assets/kova.js` | Cartes, menu, teaser vidéo, liste d'attente, panier, et l'interrupteur `venteOuverte` |
 | `assets/produit.js` | Rendu et interactions de la fiche produit |
 | `media/` | Teasers compressés (1,5 Mo chacun), boucles de broderie, images d'attente, image de partage `og.jpg` |
-| `images/drop/` | Visuels des pièces, gros plans, motifs brodés, étiquettes |
+| `images/drop/` | Visuels des pièces, gros plans, motifs brodés, dessins cotés |
 | `brand/` | Fichiers de marque en pleine résolution (arche en SVG vectoriel, logos, motifs) |
 
 ## Modifier
