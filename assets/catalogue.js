@@ -46,10 +46,10 @@ window.KOVA_CATALOGUE = (function () {
       entretien: ENTRETIEN_TEE,
       motif: 'images/drop/motif-arche-kova.webp',
       image: 'images/drop/tee-arche-plie.webp',
-      alt: 'Tee noir plié avec son hangtag, arche brodée en rouge au centre de la poitrine',
+      alt: 'Tee noir plié, arche brodée en rouge au centre de la poitrine',
       survol: 'images/drop/tee-arche-plie.webp',
       galerie: [
-        { type: 'image', src: 'images/drop/tee-arche-plie.webp', alt: 'Tee noir plié avec son hangtag, arche brodée en rouge', fond: 'noir', cover: true },
+        { type: 'image', src: 'images/drop/tee-arche-plie.webp', alt: 'Tee noir plié, arche brodée en rouge', fond: 'noir', cover: true },
         { type: 'image', src: 'images/drop/dessin-tee-arche.webp', alt: 'Dessin coté : arche et KOVA de 5 × 8,7 cm, centrés à mi-poitrine', fond: 'dessin' },
         { type: 'video', src: 'media/broderie.mp4', poster: 'media/broderie.webp', alt: 'L\'arche en train d\'être brodée en fil rouge', fond: 'noir' },
         { type: 'image', src: 'images/drop/arche-gros-plan.webp', alt: 'Gros plan sur l\'arche brodée en relief, fil rouge sur coton noir', fond: 'noir', cover: true },
@@ -79,10 +79,10 @@ window.KOVA_CATALOGUE = (function () {
       entretien: ENTRETIEN_TEE,
       motif: 'images/drop/motif-ahava-kova.webp',
       image: 'images/drop/tee-ahava-plie.webp',
-      alt: 'Tee blanc plié avec son hangtag, cœur Ahava et KOVA brodés en bordeaux sur la poitrine gauche',
+      alt: 'Tee blanc plié, cœur Ahava et KOVA brodés en bordeaux sur la poitrine gauche',
       survol: 'images/drop/tee-ahava-plie.webp',
       galerie: [
-        { type: 'image', src: 'images/drop/tee-ahava-plie.webp', alt: 'Tee blanc plié avec son hangtag, cœur Ahava brodé en bordeaux', fond: 'noir', cover: true },
+        { type: 'image', src: 'images/drop/tee-ahava-plie.webp', alt: 'Tee blanc plié, cœur Ahava brodé en bordeaux', fond: 'noir', cover: true },
         { type: 'image', src: 'images/drop/ahava-gros-plan.webp', alt: 'Gros plan sur le cœur Ahava et KOVA brodés en relief, fil bordeaux sur coton blanc', fond: 'blanc', cover: true },
         { type: 'motif', src: 'images/drop/motif-ahava-kova.webp', alt: 'Le motif : cœur Ahava et KOVA en bordeaux', fond: 'blanc' },
         { type: 'image', src: 'images/drop/dessin-tee-ahava.webp', alt: 'Dessin coté : cœur Ahava et KOVA de 6 × 7,5 cm sur la poitrine gauche', fond: 'dessin' }
