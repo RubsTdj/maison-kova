@@ -126,49 +126,55 @@ html.is-scrolled [data-home] .site-header, [data-home] .site-header.menu-open { 
 /* =====================================================================
    THÈME NOIR : luxe silencieux (accueil, La Maison)
    ===================================================================== */
-/* ---------- Chargement « Brodé » (accueil, une fois par session) ----------
-   L'arche se coud en grand (point de contour, remplissage satiné, point), puis vient se poser exactement
-   sur l'arche du logo officiel (assets/logo-maison-kova-arche.png). Position calculée par initCharge(). */
-.charge { position: fixed; inset: 0; z-index: 90; background-color: #000; cursor: pointer; animation: fondFin .7s ease 3.55s forwards; }
+/* ---------- Écran de chargement (accueil, une fois par session) ----------
+   L'arche se coud en grand au centre (contour, satin, point), se pose sur l'arche du logo officiel
+   (assets/logo-maison-kova-arche.png), le logo apparaît, puis l'écran s'efface sur le site. */
+.charge { position: fixed; inset: 0; z-index: 90; background: #000; display: grid; place-items: center; cursor: pointer; animation: introFin .6s ease 3.5s forwards; }
 .sans-intro .charge { display: none; }
+.charge .lockup { position: relative; height: min(38svh, 64vw * 720 / 637); aspect-ratio: 637 / 720; }
+.charge .lockup img { position: absolute; inset: 0; width: 100%; height: 100%; display: block; opacity: 0; animation: apparait .4s ease 2.75s forwards; }
 .brode { position: fixed; left: 0; top: 0; width: 0; height: 0; overflow: visible; transform: translate(var(--dx, 0px), var(--dy, 0px)) scale(var(--k, 1)); transform-origin: 50% 50%;
-  animation: atterrit 1s cubic-bezier(.65, 0, .35, 1) 2.6s forwards, disparait .5s ease 3.9s forwards; }
+  animation: atterrit .8s cubic-bezier(.65, 0, .35, 1) 2.1s forwards, disparait .3s ease 3.05s forwards; }
 .brode .piqure { fill: none; stroke: #FFB199; stroke-width: 9; stroke-dasharray: 34 22; stroke-linecap: round; }
-.brode .m-couture { stroke-dasharray: 1; stroke-dashoffset: 1; animation: trace 1.4s cubic-bezier(.45, 0, .55, 1) .2s forwards; }
-.brode .m-remplissage { stroke-dasharray: 1; stroke-dashoffset: 1; animation: trace 1.15s cubic-bezier(.45, 0, .55, 1) 1.15s forwards; }
-.brode .point { transform-box: fill-box; transform-origin: center; transform: scale(0); animation: pique .45s cubic-bezier(.2, 1.4, .4, 1) 2.2s forwards; }
+.brode .m-couture { stroke-dasharray: 1; stroke-dashoffset: 1; animation: trace 1.2s cubic-bezier(.45, 0, .55, 1) .2s forwards; }
+.brode .m-remplissage { stroke-dasharray: 1; stroke-dashoffset: 1; animation: trace 1s cubic-bezier(.45, 0, .55, 1) .9s forwards; }
+.brode .point { transform-box: fill-box; transform-origin: center; transform: scale(0); animation: pique .4s cubic-bezier(.2, 1.4, .4, 1) 1.8s forwards; }
 @keyframes atterrit { to { transform: none; } }
-@keyframes fondFin { to { background-color: transparent; visibility: hidden; } }
+@keyframes introFin { to { opacity: 0; visibility: hidden; } }
 @keyframes pique { to { transform: scale(1); } }
 @keyframes trace { to { stroke-dashoffset: 0; } }
 @keyframes apparait { to { opacity: 1; } }
 @keyframes disparait { to { opacity: 0; } }
 
-/* ---------- Haut de page : le tunnel brodé ----------
-   Le logo officiel au centre ; derrière, des arches en points de couture avancent vers le visiteur, sans fin. */
-:root { --lockup-h: min(38svh, 64vw * 720 / 637); }
-.tb { position: relative; height: 100svh; min-height: 560px; background: #000; overflow: hidden; }
-.tb-centre { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 36px; padding-top: calc(var(--hh) * .5); }
-.lockup { position: relative; height: var(--lockup-h); aspect-ratio: 637 / 720; }
-.lockup-img { position: absolute; inset: 0; width: 100%; height: 100%; display: block; z-index: 2; }
-.anneaux { position: absolute; left: 31.615%; top: 1.361%; width: 36.769%; height: 36.599%; overflow: visible; z-index: 1; transition: transform 1.2s var(--ease); }
-.anneau { fill: none; stroke: var(--orange); stroke-width: 1.6; stroke-dasharray: 9 6; stroke-linecap: round; vector-effect: non-scaling-stroke;
-  transform-box: fill-box; transform-origin: 50% 60%; opacity: 0; animation: avance 9s cubic-bezier(.55, 0, .9, .55) infinite; animation-delay: calc(3.8s - var(--i) * .75s); }
-@keyframes avance { 0% { transform: scale(1); opacity: 0; } 10% { opacity: .9; } 75% { opacity: .55; } 100% { transform: scale(16); opacity: 0; } }
-.tb-titre { margin: 0; text-align: center; font-size: 13px; font-weight: 300; letter-spacing: .42em; text-transform: uppercase; line-height: 2.2; opacity: 0; animation: apparait 1s ease 3.9s forwards; }
-.sans-intro .tb-titre { animation-delay: .3s; }
-.sans-intro .anneau { animation-delay: calc(.3s - var(--i) * .75s); }
-.tb-bas { position: absolute; left: 0; right: 0; bottom: 0; z-index: 3; }
-.tb-bas .wrap { display: flex; justify-content: space-between; padding-bottom: clamp(20px, 3vw, 36px); }
-.tb-bas a { text-decoration: none; }
-/* Sur l'accueil, le logo central suffit : celui de la navigation apparaît au défilement */
-[data-home] .site-header .logo { opacity: 0; transition: opacity .6s; }
-html.is-scrolled [data-home] .site-header .logo, [data-home] .site-header.menu-open .logo { opacity: 1; }
-
-/* ---------- Point par point : la vidéo de broderie, à sa taille d'origine ---------- */
-.s-broderie { padding: clamp(120px, 14vw, 200px) var(--gut) 0; display: flex; flex-direction: column; align-items: center; gap: 28px; text-align: center; }
-.s-broderie figure { margin: 0; width: min(640px, 100%); aspect-ratio: 16 / 9; background: var(--noir-video); overflow: hidden; }
-.s-broderie video { width: 100%; height: 100%; display: block; object-fit: cover; }
+/* ---------- Haut de page : la broderie en train de se faire, en fond plein écran, le texte par-dessus ----------
+   Vidéo 1280 × 720. Sur ordinateur, elle part du tiers gauche et se fond dans le noir sous le texte,
+   pour que l'arche reste dégagée à droite du titre. Sur mobile, la vidéo occupe le haut de l'écran, le texte suit. */
+.fond { position: relative; min-height: 100svh; overflow: hidden; display: flex; align-items: flex-end; background: var(--noir-video); }
+.fond-media { position: absolute; top: 0; right: 0; bottom: 0; left: 32%;
+  -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 30%); mask-image: linear-gradient(90deg, transparent 0, #000 30%); }
+.fond-video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; }
+.fond-voile { position: absolute; inset: 0; pointer-events: none;
+  background: linear-gradient(0deg, rgba(0, 0, 0, .7) 0%, rgba(0, 0, 0, 0) 40%),
+              linear-gradient(180deg, rgba(0, 0, 0, .55) 0%, rgba(0, 0, 0, 0) 18%); }
+.fond-grain { position: absolute; inset: 0; pointer-events: none; opacity: .16; mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)'/%3E%3C/svg%3E"); }
+.fond-contenu { position: relative; width: 100%; max-width: var(--max); margin: 0 auto; padding: calc(var(--hh) + 40px) var(--gut) clamp(40px, 8vh, 96px);
+  display: grid; grid-template-columns: minmax(0, 820px) 1fr; align-items: end; gap: 40px; }
+.fond-texte { display: flex; flex-direction: column; gap: 26px; }
+.fond-texte .cap { display: flex; gap: 18px; color: var(--fg-2); }
+.fond h1 { margin: 0; font-family: var(--f-titre); font-weight: 400; text-transform: uppercase; font-size: clamp(60px, 7.4vw, 120px); line-height: .86; }
+.fond-texte p { margin: 0; max-width: 46ch; font-size: clamp(15px, 1.15vw, 17px); line-height: 1.7; color: var(--fg-2); }
+.fond-texte .actions { display: flex; flex-wrap: wrap; gap: 12px; }
+.fond-specs { justify-self: end; margin: 0; min-width: 220px; display: grid; gap: 10px; color: var(--fg-2); }
+.fond-specs div { display: flex; justify-content: space-between; gap: 28px; padding-top: 10px; border-top: 1px solid var(--line-2); }
+.fond-specs dd { margin: 0; color: var(--fg); }
+@media (max-width: 900px) {
+  .fond { display: block; min-height: 0; }
+  .fond-media { position: relative; left: auto; height: 58svh; -webkit-mask-image: none; mask-image: none; }
+  .fond-voile { background: linear-gradient(0deg, var(--noir-video) 0%, rgba(0, 0, 0, .6) 22%, rgba(0, 0, 0, 0) 55%), linear-gradient(180deg, rgba(0, 0, 0, .6) 0%, rgba(0, 0, 0, 0) 22%); }
+  .fond-contenu { grid-template-columns: 1fr; margin-top: -120px; padding: 0 var(--gut) 48px; }
+  .fond-specs { display: none; }
+}
 
 .s-statement { padding: clamp(140px, 16vw, 240px) var(--gut); text-align: center; }
 .s-statement h1, .s-statement h2, .s-statement p.cap { margin: 0; font-size: 13px; font-weight: 300; letter-spacing: .42em; text-transform: uppercase; line-height: 2.2; }
@@ -421,6 +427,4 @@ fieldset { border: 0; margin: 0; padding: 0; min-width: 0; }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
   .charge { display: none; }
-  .tb-titre { opacity: 1; }
-  .anneau { opacity: .45; transform: scale(calc(1.6 + var(--i) * .9)); }
 }

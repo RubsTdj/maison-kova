@@ -26,9 +26,10 @@ Le parcours d'achat est actif (`venteOuverte: true`). Le paiement passe par **Sh
 ## Pages et parcours
 
 - **Accueil** (`index.html`, noir) :
-  - **Chargement « Brodé »** : l'arche se coud en grand (point de contour, remplissage satiné, point), puis se pose exactement sur l'arche du logo officiel. Une fois par session, un toucher pour passer, absent si l'utilisateur limite les animations (`initCharge` dans `kova.js`).
-  - **Tunnel brodé** : le logo officiel au centre (`assets/logo-maison-kova-arche.png`), et derrière lui des arches en points de couture qui avancent sans fin. Aucun défilement nécessaire ; sur ordinateur, le tunnel suit légèrement la souris.
-  - Puis les 3 pièces en grand > « Entrer dans la boutique » > photo portée > « Point par point » (vidéo de broderie à sa taille d'origine) > un paragraphe > liste.
+  - **Écran de chargement** : l'arche se coud en grand (contour, remplissage satiné, point), puis se pose sur l'arche du logo officiel (`assets/logo-maison-kova-arche.png`), et l'écran s'efface. Une fois par session, un toucher pour passer, absent si l'utilisateur limite les animations (`initCharge` dans `kova.js`).
+  - **Haut de page** : la vidéo de broderie (`media/broderie.mp4`, 1280 × 720, en boucle) en fond plein écran, le titre « Brodé, pas imprimé. » et les deux boutons par-dessus. Sur mobile, la vidéo occupe le haut de l'écran et le texte suit.
+  - Puis les 3 pièces en grand > « Entrer dans la boutique » > photo portée > un paragraphe > liste.
+  - Variante à comparer : `_proto/accueil-bento.html` (texte à gauche, vidéo dans une case à droite).
 - **Boutique** (`boutique.html`, clair) : tout le catalogue, filtres par catégorie (`?c=tees`, `?c=casquettes`), prix visibles, réassurance.
 - **Fiche produit** (`produit.html?p=tee-arche&t=m`, clair) : fil d'Ariane, galerie, prix, couleur et fil, taille (erreur claire si oubliée), « Ajouter au panier », barre d'achat fixe sur mobile, détails, « Vous aimerez aussi ».
 - **Panier** : tiroir latéral clair sur toutes les pages, confirmation d'ajout, quantités, sous-total, « Passer au paiement », « Continuer mes achats ».

@@ -31,7 +31,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Anton&family=Heebo:wght@700&family=Space+Grotesk:wght@300;400;500&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 <script>try{if(sessionStorage.getItem('kova.intro'))document.documentElement.classList.add('sans-intro');else sessionStorage.setItem('kova.intro','1')}catch(e){}</script>
-<link rel="preload" as="image" href="assets/logo-maison-kova-arche.png">
+<link rel="preload" as="image" href="media/broderie.webp">
 <link rel="stylesheet" href="assets/kova.css">
 <script src="assets/catalogue.js" defer></script>
 <script src="assets/shopify.js" defer></script>
@@ -39,7 +39,7 @@
 </head>
 <body class="theme-noir" data-home>
 <a class="skip" href="#pieces">Aller aux pièces</a>
-<div class="charge" aria-hidden="true"><svg class="brode" viewBox="0 0 2394 2698"><defs>
+<div class="charge" aria-hidden="true"><div class="lockup"><img src="assets/logo-maison-kova-arche.png" alt="" width="637" height="720"></div><svg class="brode" viewBox="0 0 2394 2698"><defs>
 <pattern id="satin" width="30" height="30" patternUnits="userSpaceOnUse" patternTransform="rotate(-58)"><rect width="30" height="30" fill="#C2341A"/><rect x="3" width="16" height="30" fill="#FF4B1F"/><rect x="8" width="6" height="30" fill="#FF7A50"/></pattern>
 <pattern id="satin-p" width="30" height="30" patternUnits="userSpaceOnUse" patternTransform="rotate(32)"><rect width="30" height="30" fill="#C2341A"/><rect x="3" width="16" height="30" fill="#FF4B1F"/><rect x="8" width="6" height="30" fill="#FF7A50"/></pattern>
 <mask id="couture"><path class="m-couture" pathLength="1" d="M0 2698V1197A1197 1197 0 0 1 2394 1197V2698H1674V1261A477 477 0 0 0 720 1261V2698Z" fill="none" stroke="#fff" stroke-width="80"/></mask>
@@ -68,12 +68,20 @@
 
 <main id="contenu">
 
-<section class="tb" aria-labelledby="t-hero">
-<div class="tb-centre">
-<div class="lockup" data-cible-arche><svg class="anneaux" viewBox="0 0 2394 2698" aria-hidden="true"><path class="anneau" style="--i:0" d="M0 2698V1197A1197 1197 0 0 1 2394 1197V2698"/><path class="anneau" style="--i:1" d="M0 2698V1197A1197 1197 0 0 1 2394 1197V2698"/><path class="anneau" style="--i:2" d="M0 2698V1197A1197 1197 0 0 1 2394 1197V2698"/><path class="anneau" style="--i:3" d="M0 2698V1197A1197 1197 0 0 1 2394 1197V2698"/><path class="anneau" style="--i:4" d="M0 2698V1197A1197 1197 0 0 1 2394 1197V2698"/><path class="anneau" style="--i:5" d="M0 2698V1197A1197 1197 0 0 1 2394 1197V2698"/><path class="anneau" style="--i:6" d="M0 2698V1197A1197 1197 0 0 1 2394 1197V2698"/><path class="anneau" style="--i:7" d="M0 2698V1197A1197 1197 0 0 1 2394 1197V2698"/><path class="anneau" style="--i:8" d="M0 2698V1197A1197 1197 0 0 1 2394 1197V2698"/><path class="anneau" style="--i:9" d="M0 2698V1197A1197 1197 0 0 1 2394 1197V2698"/><path class="anneau" style="--i:10" d="M0 2698V1197A1197 1197 0 0 1 2394 1197V2698"/><path class="anneau" style="--i:11" d="M0 2698V1197A1197 1197 0 0 1 2394 1197V2698"/></svg><img class="lockup-img" src="assets/logo-maison-kova-arche.png" alt="Maison KOVA" width="637" height="720" fetchpriority="high"></div>
-<h1 id="t-hero" class="tb-titre">Plus qu'un style<br>Une vision</h1>
+<section class="fond" aria-labelledby="t-hero">
+<div class="fond-media">
+<video class="fond-video" autoplay muted loop playsinline preload="auto" poster="media/broderie.webp" aria-label="L'arche Maison KOVA en train d'être brodée en fil rouge"><source src="media/broderie.mp4" type="video/mp4"></video>
+<div class="fond-voile" aria-hidden="true"></div><div class="fond-grain" aria-hidden="true"></div>
 </div>
-<div class="tb-bas"><div class="wrap cap"><span>Drop 01</span><a class="ul" href="boutique.html">Boutique</a></div></div>
+<div class="fond-contenu">
+<div class="fond-texte">
+<div class="cap"><span>Drop 01</span><span>Point par point</span></div>
+<h1 id="t-hero">Brodé,<br>pas imprimé.</h1>
+<p>Trois pièces cousues point par point, en rouge et en bordeaux : le Tee Arche, le Tee Ahava et la Casquette Flamme. Plus qu'un style, une vision.</p>
+<div class="actions"><a class="btn" href="boutique.html">Découvrir la boutique</a><a class="btn ghost" href="maison.html">La Maison</a></div>
+</div>
+<dl class="fond-specs cap"><div><dt>Arche</dt><dd>5 × 8,7 cm</dd></div><div><dt>Ahava</dt><dd>6 × 7,5 cm</dd></div><div><dt>Flamme</dt><dd>5,5 cm</dd></div></dl>
+</div>
 </section>
 
 <section id="pieces" aria-label="Les pièces">
@@ -85,10 +93,6 @@
 <img src="images/drop/arche-chaine.webp" alt="L'arche brodée en rouge, portée, une chaîne dorée au col" loading="lazy">
 </figure>
 
-<section class="s-broderie" aria-labelledby="t-broderie">
-<h2 id="t-broderie" class="cap" style="margin:0">Point par point</h2>
-<figure><video data-boucle muted loop playsinline preload="none" poster="media/broderie.webp" aria-label="L'arche en train d'être brodée en fil rouge"><source src="media/broderie.mp4" type="video/mp4"></video></figure>
-</section>
 
 <section class="s-text">
 <p>Coton. Fil rouge, fil bordeaux. Chaque motif brodé point par point, rien d'imprimé.</p>

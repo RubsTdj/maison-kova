@@ -446,14 +446,14 @@
     majCompteur(false);
   }
 
-  /* ---------- Chargement « Brodé » ----------
-     L'arche brodée part en grand au centre de l'écran, puis se pose sur l'arche du logo officiel du haut de page.
+  /* ---------- Écran de chargement ----------
+     L'arche brodée part en grand au centre de l'écran, puis se pose sur l'arche du logo officiel de l'écran de chargement.
      Position de l'arche dans le logo (assets/logo-maison-kova-arche.png) : 31,615 % / 1,361 %, 36,769 % × 36,599 %. */
   function initCharge() {
     var charge = document.querySelector('.charge');
     if (!charge) return;
     function retirer() { if (charge.parentNode) charge.parentNode.removeChild(charge); }
-    var cible = document.querySelector('[data-cible-arche]');
+    var cible = charge.querySelector('.lockup');
     if (reduitMouvement || !cible || document.documentElement.classList.contains('sans-intro')) { retirer(); return; }
     var brode = charge.querySelector('.brode');
     var r = cible.getBoundingClientRect();
@@ -465,17 +465,7 @@
     brode.style.setProperty('--dy', (window.innerHeight / 2 - (y + h / 2)) + 'px');
     // Un toucher passe l'animation : le haut de page démarre aussitôt
     charge.addEventListener('click', function () { document.documentElement.classList.add('sans-intro'); retirer(); });
-    setTimeout(retirer, 4600);
-  }
-
-  /* ---------- Tunnel brodé : le tunnel suit légèrement la souris (ordinateur) ---------- */
-  function initTunnel() {
-    var anneaux = document.querySelector('.tb .anneaux');
-    if (!anneaux || reduitMouvement || !window.matchMedia('(hover: hover)').matches) return;
-    window.addEventListener('pointermove', function (e) {
-      var x = e.clientX / window.innerWidth - 0.5, y = e.clientY / window.innerHeight - 0.5;
-      anneaux.style.transform = 'translate(' + (x * -30) + 'px,' + (y * -30) + 'px)';
-    }, { passive: true });
+    setTimeout(retirer, 4200);
   }
 
   /* ---------- Démarrage ---------- */
@@ -484,7 +474,8 @@
   // Démarrage : on attend les prix et stocks Shopify (s'ils sont branchés) avant d'afficher les pièces
   function init() {
     initCharge();
-    initTunnel();
+    // Mouvement réduit : les vidéos en lecture automatique restent à l'arrêt (image d'attente)
+    if (reduitMouvement) document.querySelectorAll('video[autoplay]').forEach(function (v) { v.removeAttribute('autoplay'); v.pause(); });
     var shopify = window.KOVA_SHOPIFY ? window.KOVA_SHOPIFY.pret : Promise.resolve(false);
     shopify.then(demarrer, demarrer);
   }
