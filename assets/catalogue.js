@@ -1,129 +1,126 @@
 /*
-  Catalogue Maison KOVA.
-  Source unique pour la home, la fiche produit et le panier.
+  Catalogue Maison KOVA, Drop 01.
+  Source unique pour la home, la fiche produit, la liste d'attente et (plus tard) le panier.
 
-  La structure suit le modèle Shopify (produit > variantes avec une option "Coloris")
-  pour que la phase 2 (Storefront API) remplace ce fichier sans toucher aux templates :
-  handle = handle Shopify, variant.key = valeur de l'option, variant.stock = quantityAvailable.
+  Modèle Shopify : produit > variantes (option « Taille »). handle = handle Shopify,
+  variante.key = valeur de l'option, variante.stock = quantityAvailable (phase 2).
 
-  Prix : PROVISOIRE, à remplacer (une seule valeur, ci-dessous).
+  Prix : null tant qu'il n'est pas fixé. Le site affiche alors « Prix dévoilé au lancement ».
+  Couleurs de fil : celles des fiches techniques (rouge #C72B23, bordeaux #8F222C).
 */
 window.KOVA_CATALOGUE = (function () {
-  var PRIX_EUR = 59; // PROVISOIRE, prix pas encore fixé
-
-  var COULEURS = {
-    noir: '#1C1B17',
-    creme: '#E6DDCA',
-    foret: '#264233',
-    marine: '#1E2D5C',
-    bordeaux: '#6A1F2E',
-    sable: '#D4BF95'
-  };
   var FILS = {
-    blanc: { nom: 'Fil blanc', hex: '#F2EFE8' },
-    orange: { nom: 'Fil orange', hex: '#FF4B1F' }
+    rouge: { nom: 'Fil rouge', hex: '#C72B23' },
+    bordeaux: { nom: 'Fil bordeaux', hex: '#8F222C' }
+  };
+  var TISSUS = {
+    noir: { nom: 'Noir', hex: '#141414' },
+    blanc: { nom: 'Blanc', hex: '#F4F2EE' }
   };
 
-  var SPECS = ['6 panneaux', 'Œillets brodés', 'Broderie en relief', 'Sangle réglable', 'Taille unique'];
-
-  // key : identifiant de variante dans l'URL et le panier (couleur, ou couleur-fil si ambigu)
-  // no : numéro de référence affiché sur les tuiles
-  // etiquette : libellé haut droit de la tuile (copie validée de la maquette)
-  function v(key, no, couleur, nomCouleur, fil, etiquette, image, alt) {
-    return { key: key, no: no, couleur: couleur, nomCouleur: nomCouleur, hexCouleur: COULEURS[couleur], fil: fil, etiquette: etiquette, image: image, alt: alt };
-  }
+  // Tailles des tees : PROVISOIRE, à confirmer avec le fabricant
+  var TAILLES_TEE = ['S', 'M', 'L', 'XL'];
+  var ENTRETIEN_TEE = ['Lavage 30 °C à l\'envers', 'Ne pas sécher en machine', 'Repasser sur l\'envers'];
 
   var produits = [
     {
-      handle: 'flamme',
-      nom: 'Flamme',
-      collection: 'Collection Flamme',
-      ancre: 'flamme',
-      accroche: 'Même casquette, même broderie. Seule la couleur change.',
-      description: 'Chaque langue de feu est séparée de la suivante par un jour de tissu. Les lettres hébraïques restent lisibles dans les volumes.',
-      motif: { type: 'flamme' },
-      variantes: [
-        v('noir', '01', 'noir', 'Noir', 'blanc', 'Flamme blanche', 'images/photo/f_noir.webp', "Casquette noire brodée d'une flamme blanche"),
-        v('creme', '02', 'creme', 'Crème', 'orange', 'Flamme orange', 'images/photo/f_creme.webp', "Casquette crème brodée d'une flamme orange"),
-        v('foret', '03', 'foret', 'Forêt', 'blanc', 'Flamme blanche', 'images/photo/f_foret.webp', "Casquette vert forêt brodée d'une flamme blanche"),
-        v('marine', '04', 'marine', 'Marine', 'blanc', 'Flamme blanche', 'images/photo/f_marine.webp', "Casquette bleu marine brodée d'une flamme blanche"),
-        v('bordeaux', '05', 'bordeaux', 'Bordeaux', 'blanc', 'Flamme blanche', 'images/photo/f_bordeaux.webp', "Casquette bordeaux brodée d'une flamme blanche"),
-        v('sable', '06', 'sable', 'Sable', 'orange', 'Flamme orange', 'images/photo/f_sable.webp', "Casquette sable brodée d'une flamme orange")
+      handle: 'tee-arche',
+      nom: 'Tee Arche',
+      type: 'T-shirt',
+      libelle: 'T-shirt noir',
+      tissu: 'noir',
+      fil: 'rouge',
+      prix: null,
+      tailles: TAILLES_TEE,
+      accroche: 'Le signe de la maison, au centre.',
+      description: 'L\'arche et son point, brodés en rouge à hauteur du plexus. Le mot KOVA juste en dessous.',
+      broderie: [
+        ['Motif', 'Arche + KOVA'],
+        ['Taille', '5 × 8,7 cm'],
+        ['Placement', 'Centré, mi-poitrine'],
+        ['Fil', 'Rouge #C72B23']
+      ],
+      matiere: '100 % coton',
+      entretien: ENTRETIEN_TEE,
+      image: 'images/drop/tee-arche.webp',
+      alt: 'Tee noir, arche et KOVA brodés en rouge au centre de la poitrine (dessin technique)',
+      survol: 'images/drop/tee-arche-plie.webp',
+      galerie: [
+        { type: 'image', src: 'images/drop/tee-arche.webp', alt: 'Tee noir vu de face, broderie centrée (dessin technique)', fond: 'papier', label: 'Face' },
+        { type: 'image', src: 'images/drop/tee-arche-plie.webp', alt: 'Tee noir plié avec son hangtag, arche brodée en rouge', fond: 'noir', label: 'Plié', cover: true },
+        { type: 'video', src: 'media/broderie-2.mp4', poster: 'media/broderie-2.webp', alt: 'L\'arche en train d\'être brodée en fil rouge', fond: 'noir', label: 'À la brodeuse' },
+        { type: 'image', src: 'images/drop/arche-gros-plan.webp', alt: 'Gros plan sur l\'arche brodée en relief, fil rouge sur coton noir', fond: 'noir', label: 'Gros plan', cover: true },
+        { type: 'motif', src: 'images/drop/motif-arche-kova.webp', alt: 'Le motif : arche et KOVA en rouge', fond: 'noir', label: 'Le motif' }
       ]
     },
     {
-      handle: 'malka',
-      nom: 'Malka',
-      collection: 'Collection Roi & Reine',
-      ancre: 'roi-reine',
-      hebreu: 'מלכה',
-      sens: 'La reine',
-      accroche: 'Deux mots, deux couronnes.',
-      description: 'Les lettres hébraïques forment elles-mêmes les pointes.',
-      motif: { type: 'image', src: 'images/a_malka.webp' },
-      variantes: [
-        v('noir', '07', 'noir', 'Noir', 'blanc', 'Malka blanc', 'images/photo/k_malka_noir.webp', 'Casquette noire brodée de la couronne Malka en blanc'),
-        v('bordeaux', '08', 'bordeaux', 'Bordeaux', 'blanc', 'Malka blanc', 'images/photo/k_malka_bordeaux.webp', 'Casquette bordeaux brodée de la couronne Malka en blanc')
-      ]
-    },
-    {
-      handle: 'meller',
-      nom: 'Meller',
-      collection: 'Collection Roi & Reine',
-      ancre: 'roi-reine',
-      hebreu: 'מלך',
-      sens: 'Le roi',
-      accroche: 'Deux mots, deux couronnes.',
-      description: 'Les lettres hébraïques forment elles-mêmes les pointes.',
-      motif: { type: 'image', src: 'images/a_melech.webp' },
-      variantes: [
-        v('noir', '09', 'noir', 'Noir', 'orange', 'Meller orange', 'images/photo/k_melech_noir.webp', 'Casquette noire brodée de la couronne Meller en orange'),
-        v('marine', '10', 'marine', 'Marine', 'blanc', 'Meller blanc', 'images/photo/k_melech_marine.webp', 'Casquette bleu marine brodée de la couronne Meller en blanc')
-      ]
-    },
-    {
-      handle: 'ahava',
-      nom: 'Ahava',
-      collection: 'Collection Amour',
-      ancre: 'amour',
+      handle: 'tee-ahava',
+      nom: 'Tee Ahava',
+      type: 'T-shirt',
+      libelle: 'T-shirt blanc',
+      tissu: 'blanc',
+      fil: 'bordeaux',
+      prix: null,
+      tailles: TAILLES_TEE,
       hebreu: 'אהבה',
-      sens: "L'amour",
-      accroche: "L'amour, écrit en hébreu et dessiné en forme de cœur.",
-      description: 'Quatre lettres, un seul geste.',
-      motif: { type: 'image', src: 'images/a_ahava.webp' },
-      variantes: [
-        v('noir', '11', 'noir', 'Noir', 'blanc', 'Ahava blanc', 'images/photo/k_ahava_noir.webp', 'Casquette noire brodée du cœur Ahava en blanc'),
-        v('creme', '12', 'creme', 'Crème', 'orange', 'Ahava orange', 'images/photo/k_ahava_creme.webp', 'Casquette crème brodée du cœur Ahava en orange'),
-        v('bordeaux', '13', 'bordeaux', 'Bordeaux', 'blanc', 'Ahava blanc', 'images/photo/k_ahava_bordeaux.webp', 'Casquette bordeaux brodée du cœur Ahava en blanc')
+      sens: 'L\'amour',
+      accroche: 'L\'amour, écrit en hébreu et dessiné en cœur.',
+      description: 'Quatre lettres, un seul geste. Brodé en bordeaux sur la poitrine gauche, KOVA en dessous.',
+      broderie: [
+        ['Motif', 'Cœur Ahava + KOVA'],
+        ['Taille', '6 × 7,5 cm'],
+        ['Placement', 'Poitrine gauche'],
+        ['Fil', 'Bordeaux #8F222C']
+      ],
+      matiere: '100 % coton',
+      entretien: ENTRETIEN_TEE,
+      image: 'images/drop/tee-ahava.webp',
+      alt: 'Tee blanc, cœur Ahava et KOVA brodés en bordeaux sur la poitrine gauche (dessin technique)',
+      survol: null,
+      galerie: [
+        { type: 'image', src: 'images/drop/tee-ahava.webp', alt: 'Tee blanc vu de face, broderie poitrine gauche (dessin technique)', fond: 'papier', label: 'Face' },
+        { type: 'motif', src: 'images/drop/motif-ahava-kova.webp', alt: 'Le motif : cœur Ahava et KOVA en bordeaux', fond: 'blanc', label: 'Le motif' }
       ]
     },
     {
-      handle: 'kova',
-      nom: 'KOVA',
-      collection: 'Les basiques',
-      ancre: 'basiques',
-      hebreu: 'כובע',
-      sens: 'La casquette',
-      accroche: "Le nom de la marque, brodé à l'avant.",
-      description: "Rien d'autre.",
-      motif: { type: 'mot', texte: 'KOVA' },
-      variantes: [
-        v('noir-blanc', '14', 'noir', 'Noir', 'blanc', 'KOVA blanc', 'images/photo/b_noir_b.webp', 'Casquette noire brodée du mot KOVA en blanc'),
-        v('noir-orange', '15', 'noir', 'Noir', 'orange', 'KOVA orange', 'images/photo/b_noir_o.webp', 'Casquette noire brodée du mot KOVA en orange'),
-        v('marine', '16', 'marine', 'Marine', 'blanc', 'KOVA blanc', 'images/photo/b_marine_b.webp', 'Casquette bleu marine brodée du mot KOVA en blanc'),
-        v('foret', '17', 'foret', 'Forêt', 'blanc', 'KOVA blanc', 'images/photo/b_foret_b.webp', 'Casquette vert forêt brodée du mot KOVA en blanc'),
-        v('creme', '18', 'creme', 'Crème', 'orange', 'KOVA orange', 'images/photo/b_creme_o.webp', 'Casquette crème brodée du mot KOVA en orange')
+      handle: 'casquette-flamme',
+      nom: 'Casquette Flamme',
+      type: 'Casquette',
+      libelle: 'Casquette noire',
+      tissu: 'noir',
+      fil: 'rouge',
+      prix: null,
+      tailles: null, // taille unique, sangle réglable
+      accroche: 'Là où tout a commencé.',
+      description: 'La flamme brodée en rouge sur le devant, KOVA sur le côté gauche. Chaque langue de feu est séparée de la suivante par un jour de tissu.',
+      broderie: [
+        ['Devant', 'Flamme, 5,5 cm de haut'],
+        ['Côté gauche', 'KOVA, 4 cm de large'],
+        ['Fil', 'Rouge #C72B23'],
+        ['Taille', 'Unique, sangle réglable']
+      ],
+      matiere: null,
+      entretien: null,
+      image: 'images/drop/casquette-flamme.webp',
+      alt: 'Casquette noire, flamme brodée en rouge sur le devant et KOVA sur le côté',
+      survol: 'images/drop/casquette-flamme-detail.webp',
+      galerie: [
+        { type: 'image', src: 'images/drop/casquette-flamme.webp', alt: 'Casquette noire vue de trois quarts, flamme rouge brodée', fond: 'papier', label: 'Trois quarts' },
+        { type: 'image', src: 'images/drop/casquette-flamme-detail.webp', alt: 'Gros plan : flamme rouge sur le devant, KOVA sur le côté', fond: 'noir', label: 'Gros plan', cover: true },
+        { type: 'motif', src: 'images/drop/motif-flamme.webp', alt: 'Le motif : la flamme en rouge', fond: 'noir', label: 'Le motif' }
       ]
     }
   ];
 
-  produits.forEach(function (p) {
-    p.prix = PRIX_EUR;
-    p.specs = SPECS;
-    p.variantes.forEach(function (va) {
-      va.id = p.handle + '/' + va.key;
-      va.nomFil = FILS[va.fil].nom;
-      va.hexFil = FILS[va.fil].hex;
+  produits.forEach(function (p, i) {
+    p.no = ('0' + (i + 1)).slice(-2);
+    p.nomTissu = TISSUS[p.tissu].nom;
+    p.hexTissu = TISSUS[p.tissu].hex;
+    p.nomFil = FILS[p.fil].nom;
+    p.hexFil = FILS[p.fil].hex;
+    // Variantes Shopify : une par taille, ou « TU » (taille unique)
+    p.variantes = (p.tailles || ['TU']).map(function (t) {
+      return { key: t.toLowerCase(), taille: t, id: p.handle + '/' + t.toLowerCase() };
     });
   });
 
@@ -141,5 +138,5 @@ window.KOVA_CATALOGUE = (function () {
     return null;
   }
 
-  return { devise: 'EUR', produits: produits, produit: produit, variante: variante };
+  return { devise: 'EUR', drop: 'Drop 01', produits: produits, produit: produit, variante: variante };
 })();

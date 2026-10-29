@@ -1,27 +1,33 @@
 /*
-  Maison KOVA, scripts communs : tuiles produit, menu mobile, panier, liste d'attente.
-  Sans dépendance ni build. Le panier vit dans le localStorage du visiteur.
+  Maison KOVA, scripts communs : cartes produit, menu mobile, teaser vidéo, liste d'attente, panier.
+  Sans dépendance ni build.
 
-  Phase 2 : le panier sera porté par Shopify (Storefront API, cartCreate / cartLinesAdd).
-  Les points de branchement sont signalés par "PHASE 2".
+  Pré-lancement : CONFIG.venteOuverte = false. Le panier est masqué et chaque fiche produit
+  propose « Me prévenir » (avec la taille). Le jour J, passer venteOuverte à true :
+  le bouton Panier réapparaît et les fiches affichent « Ajouter au panier ».
+
+  Phase 2 (Shopify, Supabase, PostHog) : points de branchement signalés par "PHASE 2".
 */
 (function () {
   'use strict';
 
   var CONFIG = {
+    venteOuverte: false,
     // PHASE 2 : URL d'insertion de la liste d'attente (ex. Supabase REST /rest/v1/liste_attente) + en-têtes publics.
     listeAttenteEndpoint: null,
     listeAttenteHeaders: {},
     // Garde-fou par ligne de panier tant que le stock réel n'est pas branché.
     quantiteMax: 10,
-    cleStockage: 'kova.panier.v1'
+    cleStockage: 'kova.panier.v2'
   };
 
   var C = window.KOVA_CATALOGUE;
   var reduitMouvement = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var surAccueil = document.body.hasAttribute('data-home');
 
   /* ---------- Utilitaires ---------- */
   function prix(n) {
+    if (n === null || n === undefined) return 'Prix au lancement';
     var entier = Math.round(n * 100) % 100 === 0;
     return new Intl.NumberFormat('fr-FR', { style: 'currency', currency: C.devise, minimumFractionDigits: entier ? 0 : 2, maximumFractionDigits: 2 }).format(n);
   }
@@ -29,46 +35,35 @@
     return String(s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; });
   }
   function url(produit, variante) {
-    return 'produit.html?p=' + encodeURIComponent(produit.handle) + (variante ? '&v=' + encodeURIComponent(variante.key) : '');
+    return 'produit.html?p=' + encodeURIComponent(produit.handle) + (variante ? '&t=' + encodeURIComponent(variante.key) : '');
   }
-  // Analytics : branché seulement si PostHog est présent sur la page (phase 2).
+  function ancre(id) { return (surAccueil ? '' : './') + '#' + id; }
+  // PHASE 2 : branché seulement si PostHog est présent sur la page.
   function track(evenement, props) {
     try { if (window.posthog && window.posthog.capture) window.posthog.capture(evenement, props || {}); } catch (e) {}
   }
 
-  /* ---------- Tuiles produit ---------- */
-  function tuile(produit, variante, opts) {
-    opts = opts || {};
-    var label = produit.nom + ', ' + variante.nomCouleur.toLowerCase() + ', ' + variante.nomFil.toLowerCase() + ', ' + prix(produit.prix);
-    return '<a class="tile' + (opts.reveal === false ? '' : ' rv') + '" href="' + url(produit, variante) + '" aria-label="' + esc(label) + '">' +
-      '<div class="top"><span class="no">N°' + esc(variante.no) + '</span><span>' + esc(opts.titre || variante.etiquette) + '</span></div>' +
-      '<div class="img"><img class="cap" src="' + esc(variante.image) + '" alt="' + esc(variante.alt) + '" loading="lazy" width="1000" height="800">' +
-      '<div class="add" aria-hidden="true">VOIR LA CASQUETTE →</div></div>' +
-      '<div class="bar"><div class="name">' + esc(opts.nom || variante.nomCouleur) + '</div><div class="price">' + prix(produit.prix) + '</div></div>' +
+  /* ---------- Cartes produit ---------- */
+  function carte(p) {
+    var statut = CONFIG.venteOuverte ? prix(p.prix) : 'Bientôt';
+    return '<a class="card rv" href="' + url(p) + '" aria-label="' + esc(p.nom + ', ' + p.libelle.toLowerCase() + ', ' + p.nomFil.toLowerCase() + '. ' + statut) + '">' +
+      '<div class="card-media' + (p.survol ? ' has-alt' : '') + '">' +
+        '<span class="card-tag"><span>' + esc(p.libelle) + '</span><span class="fil" style="--fil:' + p.hexFil + '">' + esc(p.nomFil) + '</span></span>' +
+        '<img class="main" src="' + esc(p.image) + '" alt="' + esc(p.alt) + '" loading="lazy" width="1100" height="917">' +
+        (p.survol ? '<img class="alt" src="' + esc(p.survol) + '" alt="" loading="lazy" aria-hidden="true">' : '') +
+      '</div>' +
+      '<div class="card-bar"><span class="name">' + esc(p.nom) + '</span><span class="state">' + esc(statut) + ' <span class="arr" aria-hidden="true">→</span></span></div>' +
       '</a>';
   }
 
-  // Tuile "motif" : le dessin brodé (couronne, cœur), en tête des coloris du modèle
-  function tuileMotif(produit) {
-    return '<a class="tile art rv" href="' + url(produit) + '" aria-label="' + esc(produit.nom + ', ' + produit.sens.toLowerCase() + ', voir le modèle') + '">' +
-      '<div class="top"><span>Le motif</span><span class="accent">' + esc(produit.sens) + '</span></div>' +
-      '<div class="img"><img src="' + esc(produit.motif.src) + '" alt="" loading="lazy"></div>' +
-      '<div class="bar"><div class="name">' + esc(produit.nom) + '</div><div class="he" lang="he" dir="rtl">' + esc(produit.hebreu) + '</div></div>' +
-      '</a>';
-  }
-
+  // data-produits="tous" | "tee-arche,tee-ahava" | "sauf:tee-arche"
   function rendreGrilles() {
-    var grilles = document.querySelectorAll('[data-produits]');
-    Array.prototype.forEach.call(grilles, function (g) {
-      var html = '';
-      var avecMotifs = g.hasAttribute('data-motifs');
-      g.getAttribute('data-produits').split(',').forEach(function (handle) {
-        var p = C.produit(handle.trim());
-        if (!p) return;
-        if (avecMotifs && p.motif.type === 'image') html += tuileMotif(p);
-        p.variantes.forEach(function (v) { html += tuile(p, v); });
-      });
-      g.innerHTML = html;
+    document.querySelectorAll('[data-produits]').forEach(function (g) {
+      var v = g.getAttribute('data-produits');
+      var liste = C.produits;
+      if (v.indexOf('sauf:') === 0) liste = C.produits.filter(function (p) { return p.handle !== v.slice(5); });
+      else if (v !== 'tous') liste = v.split(',').map(function (h) { return C.produit(h.trim()); }).filter(Boolean);
+      g.innerHTML = liste.map(carte).join('');
     });
   }
 
@@ -77,17 +72,146 @@
     var header = document.querySelector('.site-header');
     var btn = header && header.querySelector('.menu-btn');
     if (!btn) return;
-    function fermer() { header.classList.remove('menu-open'); btn.setAttribute('aria-expanded', 'false'); }
+    function fermer() { header.classList.remove('menu-open'); btn.setAttribute('aria-expanded', 'false'); document.documentElement.classList.remove('no-scroll'); }
     btn.addEventListener('click', function () {
       var ouvert = header.classList.toggle('menu-open');
       btn.setAttribute('aria-expanded', ouvert ? 'true' : 'false');
+      document.documentElement.classList.toggle('no-scroll', ouvert);
     });
     header.querySelectorAll('.nav a').forEach(function (a) { a.addEventListener('click', fermer); });
     document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && header.classList.contains('menu-open')) { fermer(); btn.focus(); } });
     window.matchMedia('(min-width: 901px)').addEventListener('change', function (m) { if (m.matches) fermer(); });
   }
 
-  /* ---------- Panier ---------- */
+  /* ---------- Teaser vidéo (home) ----------
+     Paysage sur écran large, vertical sur écran portrait. Muet en lecture auto (règle des navigateurs),
+     bouton Son pour l'activer. Mouvement réduit : pas de lecture auto, l'image finale reste affichée. */
+  function initTeaser() {
+    var bloc = document.querySelector('[data-teaser]');
+    if (!bloc) return;
+    var video = bloc.querySelector('video');
+    var btnSon = bloc.querySelector('[data-son]');
+    var btnLecture = bloc.querySelector('[data-lecture]');
+    var portrait = window.matchMedia('(max-aspect-ratio: 4/5)');
+
+    function format() { return portrait.matches ? 'vertical' : 'paysage'; }
+    function charger(lancer) {
+      var f = format();
+      if (video.getAttribute('data-format') === f) return;
+      video.setAttribute('data-format', f);
+      video.poster = 'media/teaser-' + f + '.webp';
+      video.src = 'media/teaser-' + f + '.mp4';
+      if (lancer) video.play().catch(function () { majLecture(); });
+    }
+    function majLecture() {
+      var enPause = video.paused || video.ended;
+      btnLecture.setAttribute('aria-label', video.ended ? 'Revoir le teaser' : enPause ? 'Lire le teaser' : 'Mettre le teaser en pause');
+      btnLecture.querySelector('span').textContent = video.ended ? 'Revoir' : enPause ? 'Lecture' : 'Pause';
+    }
+    function majSon() {
+      btnSon.setAttribute('aria-pressed', video.muted ? 'false' : 'true');
+      btnSon.querySelector('span').textContent = video.muted ? 'Son coupé' : 'Son activé';
+    }
+
+    video.muted = true;
+    charger(!reduitMouvement);
+    if (!reduitMouvement) {
+      // L'événement change sur la media query évite de recharger la vidéo à chaque redimensionnement
+      portrait.addEventListener('change', function () { charger(!video.paused); });
+    }
+    video.addEventListener('play', majLecture);
+    video.addEventListener('pause', majLecture);
+    video.addEventListener('ended', majLecture);
+    btnLecture.addEventListener('click', function () {
+      if (video.paused || video.ended) { video.play().catch(function () {}); track('teaser_play'); }
+      else video.pause();
+    });
+    btnSon.addEventListener('click', function () {
+      video.muted = !video.muted;
+      if (!video.muted && video.paused) video.play().catch(function () {});
+      majSon();
+      track('teaser_sound', { on: !video.muted });
+    });
+    majLecture();
+    majSon();
+  }
+
+  /* ---------- Boucles vidéo décoratives (broderie) ----------
+     Lecture seulement quand elles sont visibles, jamais en mouvement réduit. */
+  function initBoucles() {
+    var boucles = document.querySelectorAll('video[data-boucle]');
+    if (!boucles.length || reduitMouvement || !('IntersectionObserver' in window)) return;
+    var io = new IntersectionObserver(function (entrees) {
+      entrees.forEach(function (e) {
+        if (e.isIntersecting) e.target.play().catch(function () {});
+        else e.target.pause();
+      });
+    }, { threshold: 0.25 });
+    boucles.forEach(function (v) { v.muted = true; io.observe(v); });
+  }
+
+  /* ---------- Liste d'attente ----------
+     Un même branchement pour le formulaire général (home, pages) et celui des fiches produit.
+     extra() renvoie les infos utiles à la production : produits qui intéressent, taille. */
+  function envoyerInscription(donnees) {
+    track('waitlist_submit', { produits: donnees.produits, taille: donnees.taille || null, source: donnees.source });
+    if (!CONFIG.listeAttenteEndpoint) return Promise.resolve({ demo: true });
+    var headers = Object.assign({ 'Content-Type': 'application/json' }, CONFIG.listeAttenteHeaders);
+    return fetch(CONFIG.listeAttenteEndpoint, { method: 'POST', headers: headers, body: JSON.stringify(donnees) })
+      .then(function (r) { if (!r.ok) throw new Error(r.status); return { demo: false }; });
+  }
+
+  function brancherListe(form, extra) {
+    if (!form || form.hasAttribute('data-branche')) return;
+    form.setAttribute('data-branche', '');
+    var input = form.querySelector('input[type="email"]');
+    var statut = form.querySelector('.status');
+    var bouton = form.querySelector('button[type="submit"]');
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      statut.removeAttribute('data-etat');
+      var email = input.value.trim();
+      if (!email || !input.checkValidity()) {
+        statut.setAttribute('data-etat', 'erreur');
+        statut.textContent = 'Il manque une adresse e-mail valide.';
+        input.focus();
+        return;
+      }
+      var plus = extra ? extra() : {};
+      if (plus.erreur) {
+        statut.setAttribute('data-etat', 'erreur');
+        statut.textContent = plus.erreur;
+        if (plus.focus) plus.focus.focus();
+        return;
+      }
+      var choix = Array.prototype.map.call(form.querySelectorAll('input[name="produits"]:checked'), function (c) { return c.value; });
+      var donnees = {
+        email: email,
+        produits: plus.produits || choix,
+        taille: plus.taille || null,
+        source: location.pathname + location.search
+      };
+      bouton.disabled = true;
+      envoyerInscription(donnees).then(function (r) {
+        if (r.demo) {
+          // Honnête tant que rien n'est branché : on ne prétend pas avoir enregistré l'adresse.
+          statut.textContent = 'Merci. Version de démonstration : la liste d\'attente n\'est pas encore branchée, ton adresse n\'a pas été enregistrée.';
+        } else {
+          form.reset();
+          statut.textContent = plus.confirmation || 'C\'est noté. Un seul e-mail, le jour du lancement.';
+        }
+      }).catch(function () {
+        statut.setAttribute('data-etat', 'erreur');
+        statut.textContent = 'Ça n\'est pas passé. Réessaie dans un instant.';
+      }).then(function () { bouton.disabled = false; });
+    });
+  }
+
+  function initListeAttente() {
+    document.querySelectorAll('[data-waitlist]').forEach(function (f) { brancherListe(f); });
+  }
+
+  /* ---------- Panier (actif seulement quand la vente est ouverte) ---------- */
   var stockageMemoire = null;
   function lire() {
     try {
@@ -99,7 +223,6 @@
     stockageMemoire = lignes;
     try { window.localStorage.setItem(CONFIG.cleStockage, JSON.stringify(lignes)); } catch (e) {}
   }
-  // Ne garde que les lignes qui existent encore au catalogue
   function lignesValides() {
     return lire().filter(function (l) { return l && C.variante(l.id) && l.qte > 0; }).map(function (l) {
       var r = C.variante(l.id);
@@ -107,7 +230,6 @@
     });
   }
 
-  // Revérifie le stock au moment de l'ajout.
   // PHASE 2 : interroger la Storefront API (quantityAvailable) au lieu du catalogue local.
   function stockDisponible(id) {
     var r = C.variante(id);
@@ -119,16 +241,14 @@
   var panier = {
     lignes: lignesValides,
     nombre: function () { return lignesValides().reduce(function (n, l) { return n + l.qte; }, 0); },
-    sousTotal: function () { return lignesValides().reduce(function (t, l) { return t + l.qte * l.produit.prix; }, 0); },
-
+    sousTotal: function () { return lignesValides().reduce(function (t, l) { return t + l.qte * (l.produit.prix || 0); }, 0); },
     ajouter: function (id, qte) {
       qte = Math.max(1, qte | 0);
       return stockDisponible(id).then(function (dispo) {
         var lignes = lire();
         var ligne = lignes.filter(function (l) { return l.id === id; })[0];
         var dejaLa = ligne ? ligne.qte : 0;
-        var possible = Math.max(0, dispo - dejaLa);
-        var ajoute = Math.min(qte, possible);
+        var ajoute = Math.min(qte, Math.max(0, dispo - dejaLa));
         if (ajoute > 0) {
           if (ligne) ligne.qte += ajoute; else lignes.push({ id: id, qte: ajoute });
           ecrire(lignes);
@@ -139,24 +259,19 @@
         return { ajoute: ajoute, demande: qte, dispo: dispo, dejaLa: dejaLa };
       });
     },
-
     changer: function (id, qte) {
-      var lignes = lire();
       return stockDisponible(id).then(function (dispo) {
-        lignes = lignes.map(function (l) { return l.id === id ? { id: id, qte: Math.max(0, Math.min(qte, dispo)) } : l; })
-          .filter(function (l) { return l.qte > 0; });
-        ecrire(lignes);
+        ecrire(lire().map(function (l) { return l.id === id ? { id: id, qte: Math.max(0, Math.min(qte, dispo)) } : l; })
+          .filter(function (l) { return l.qte > 0; }));
         majCompteur(false);
         rendreTiroir();
       });
     },
-
     retirer: function (id) {
       ecrire(lire().filter(function (l) { return l.id !== id; }));
       majCompteur(false);
       rendreTiroir();
     },
-
     ouvrir: function () { ouvrirTiroir(); },
     fermer: function () { fermerTiroir(); }
   };
@@ -166,16 +281,14 @@
     document.querySelectorAll('[data-cart-count]').forEach(function (el) {
       el.textContent = n;
       el.classList.toggle('has-items', n > 0);
-      if (anime && !reduitMouvement) {
-        el.classList.remove('bump'); void el.offsetWidth; el.classList.add('bump');
-      }
+      if (anime && !reduitMouvement) { el.classList.remove('bump'); void el.offsetWidth; el.classList.add('bump'); }
     });
     document.querySelectorAll('[data-cart-open]').forEach(function (b) {
       b.setAttribute('aria-label', 'Ouvrir le panier, ' + n + (n > 1 ? ' articles' : ' article'));
     });
   }
 
-  /* Tiroir (élément <dialog> : focus piégé et touche Échap gérés par le navigateur) */
+  /* Tiroir (<dialog> : focus piégé et Échap gérés par le navigateur) */
   var tiroir, dernierFocus;
   function creerTiroir() {
     tiroir = document.createElement('dialog');
@@ -187,9 +300,8 @@
       '<div class="d-body" data-drawer-body></div>' +
       '<div class="d-foot" data-drawer-foot></div>';
     document.body.appendChild(tiroir);
-
     tiroir.addEventListener('click', function (e) {
-      if (e.target === tiroir) { fermerTiroir(); return; } // clic sur le fond
+      if (e.target === tiroir) { fermerTiroir(); return; }
       var t = e.target.closest('button, a');
       if (!t) return;
       var id;
@@ -198,16 +310,11 @@
       else if ((id = t.getAttribute('data-moins'))) panier.changer(id, qteDe(id) - 1).then(function () { refocus('data-moins', id); });
       else if ((id = t.getAttribute('data-retirer'))) { panier.retirer(id); refocus(); }
       else if (t.hasAttribute('data-commander')) commander();
-      else if (t.tagName === 'A') {
-        // Lien interne (fiche produit, ancre de la home) : fermeture immédiate pour laisser la navigation se faire
-        tiroir.classList.remove('closing');
-        tiroir.close();
-      }
+      else if (t.tagName === 'A') { tiroir.classList.remove('closing'); tiroir.close(); }
     });
     tiroir.addEventListener('cancel', function (e) { e.preventDefault(); fermerTiroir(); });
     rendreTiroir();
   }
-  // Le tiroir est re-rendu à chaque changement : on rend le focus au même bouton (ou au bouton Fermer).
   function refocus(attr, id) {
     var cible = null;
     if (attr) tiroir.querySelectorAll('[' + attr + ']').forEach(function (b) { if (b.getAttribute(attr) === id && !b.disabled) cible = b; });
@@ -217,7 +324,6 @@
     var l = lire().filter(function (x) { return x.id === id; })[0];
     return l ? l.qte : 0;
   }
-
   function rendreTiroir() {
     if (!tiroir) return;
     var lignes = lignesValides();
@@ -225,10 +331,8 @@
     tiroir.querySelector('[data-drawer-count]').textContent = n ? '(' + n + ')' : '';
     var corps = tiroir.querySelector('[data-drawer-body]');
     var pied = tiroir.querySelector('[data-drawer-foot]');
-    var accueil = document.body.hasAttribute('data-home') ? '#collection' : './#collection';
-
     if (!lignes.length) {
-      corps.innerHTML = '<div class="empty"><p>Ton panier<br>est vide.</p><a class="btn" href="' + accueil + '">Voir la collection <span class="arr" aria-hidden="true">→</span></a></div>';
+      corps.innerHTML = '<div class="empty"><p>Ton panier<br>est vide.</p><a class="btn" href="' + ancre('drop') + '">Voir le drop <span class="arr" aria-hidden="true">→</span></a></div>';
       pied.innerHTML = '';
       pied.hidden = true;
       return;
@@ -237,15 +341,15 @@
     corps.innerHTML = '<ul class="lines">' + lignes.map(function (l) {
       var p = l.produit, v = l.variante, lien = url(p, v);
       return '<li class="line">' +
-        '<a class="thumb" href="' + lien + '" tabindex="-1" aria-hidden="true"><img src="' + esc(v.image) + '" alt="" width="1000" height="800"></a>' +
+        '<a class="thumb" href="' + lien + '" tabindex="-1" aria-hidden="true"><img src="' + esc(p.image) + '" alt=""></a>' +
         '<div class="info"><a href="' + lien + '"><span class="nm">' + esc(p.nom) + '</span></a>' +
-        '<span class="vr">' + esc(v.nomCouleur) + ' · ' + esc(v.nomFil) + ' · N°' + esc(v.no) + '</span>' +
-        '<div class="controls"><div class="qty" role="group" aria-label="Quantité ' + esc(p.nom + ' ' + v.nomCouleur) + '">' +
+        '<span class="vr">' + esc(p.nomTissu) + ' · ' + esc(p.nomFil) + ' · ' + (v.taille === 'TU' ? 'Taille unique' : 'Taille ' + esc(v.taille)) + '</span>' +
+        '<div class="controls"><div class="qty" role="group" aria-label="Quantité ' + esc(p.nom) + '">' +
         '<button type="button" data-moins="' + esc(l.id) + '" aria-label="Retirer un">−</button>' +
         '<output aria-live="polite">' + l.qte + '</output>' +
         '<button type="button" data-plus="' + esc(l.id) + '" aria-label="Ajouter un"' + (l.qte >= CONFIG.quantiteMax ? ' disabled' : '') + '>+</button></div>' +
         '<button class="rm" type="button" data-retirer="' + esc(l.id) + '">Retirer</button></div></div>' +
-        '<div class="lp">' + prix(l.qte * p.prix) + '</div>' +
+        '<div class="lp">' + prix(l.qte * (p.prix || 0)) + '</div>' +
         '</li>';
     }).join('') + '</ul>';
     pied.innerHTML =
@@ -254,15 +358,11 @@
       '<button class="btn block" type="button" data-commander>Commander <span class="arr" aria-hidden="true">→</span></button>' +
       '<div data-checkout-msg aria-live="polite"></div>';
   }
-
   // PHASE 2 : rediriger vers le checkout Shopify (cart.checkoutUrl).
   function commander() {
     track('checkout_click', { items: panier.nombre(), subtotal: panier.sousTotal() });
-    var zone = tiroir.querySelector('[data-checkout-msg]');
-    var liste = document.body.hasAttribute('data-home') ? '#liste' : './#liste';
-    zone.innerHTML = '<div class="checkout-msg">Le paiement ouvre avec le Drop 01. Ton panier reste gardé sur cet appareil. <a href="' + liste + '">Inscris-toi à la liste d\'attente</a> pour être prévenu le jour J.</div>';
+    tiroir.querySelector('[data-checkout-msg]').innerHTML = '<div class="checkout-msg">Le paiement n\'est pas encore branché.</div>';
   }
-
   function ouvrirTiroir() {
     if (!tiroir) creerTiroir();
     if (tiroir.open) return;
@@ -270,82 +370,45 @@
     rendreTiroir();
     tiroir.classList.remove('closing');
     tiroir.showModal();
-    var fermerBtn = tiroir.querySelector('[data-cart-close]');
-    if (fermerBtn) fermerBtn.focus();
+    var b = tiroir.querySelector('[data-cart-close]');
+    if (b) b.focus();
   }
-
-  function fermerTiroir(sansRetourFocus) {
+  function fermerTiroir() {
     if (!tiroir || !tiroir.open) return;
     function fin() {
       tiroir.classList.remove('closing');
       tiroir.close();
-      if (!sansRetourFocus && dernierFocus && dernierFocus.focus) dernierFocus.focus();
+      if (dernierFocus && dernierFocus.focus) dernierFocus.focus();
     }
     if (reduitMouvement) { fin(); return; }
     tiroir.classList.add('closing');
     var fait = false;
     tiroir.addEventListener('animationend', function h() { tiroir.removeEventListener('animationend', h); if (!fait) { fait = true; fin(); } });
-    setTimeout(function () { if (!fait) { fait = true; fin(); } }, 400); // filet de sécurité
+    setTimeout(function () { if (!fait) { fait = true; fin(); } }, 400);
   }
-
   function initPanier() {
+    document.querySelectorAll('[data-cart-open]').forEach(function (b) { b.hidden = !CONFIG.venteOuverte; });
+    document.querySelectorAll('[data-prelancement]').forEach(function (el) { el.hidden = CONFIG.venteOuverte; });
+    if (!CONFIG.venteOuverte) return;
     creerTiroir();
     document.addEventListener('click', function (e) {
       var b = e.target.closest('[data-cart-open]');
       if (b) { e.preventDefault(); ouvrirTiroir(); }
     });
-    // Synchronise les onglets ouverts en parallèle
     window.addEventListener('storage', function (e) {
       if (e.key === CONFIG.cleStockage) { majCompteur(false); rendreTiroir(); }
     });
     majCompteur(false);
   }
 
-  /* ---------- Liste d'attente ---------- */
-  function initListeAttente() {
-    document.querySelectorAll('[data-waitlist]').forEach(function (form) {
-      var input = form.querySelector('input[type="email"]');
-      var statut = form.querySelector('.status');
-      form.addEventListener('submit', function (e) {
-        e.preventDefault();
-        statut.removeAttribute('data-etat');
-        var email = input.value.trim();
-        if (!email || !input.checkValidity()) {
-          statut.setAttribute('data-etat', 'erreur');
-          statut.textContent = 'Il manque une adresse e-mail valide.';
-          input.focus();
-          return;
-        }
-        track('waitlist_submit');
-        if (!CONFIG.listeAttenteEndpoint) {
-          // Honnête tant que rien n'est branché : on ne prétend pas avoir enregistré l'adresse.
-          statut.textContent = 'Merci. Version de démonstration : la liste d\'attente n\'est pas encore branchée, ton adresse n\'a pas été enregistrée.';
-          return;
-        }
-        var bouton = form.querySelector('button[type="submit"]');
-        bouton.disabled = true;
-        var headers = Object.assign({ 'Content-Type': 'application/json' }, CONFIG.listeAttenteHeaders);
-        fetch(CONFIG.listeAttenteEndpoint, { method: 'POST', headers: headers, body: JSON.stringify({ email: email, source: location.pathname }) })
-          .then(function (r) {
-            if (!r.ok) throw new Error(r.status);
-            form.reset();
-            statut.textContent = 'C\'est noté. Un seul e-mail, le jour du lancement.';
-          })
-          .catch(function () {
-            statut.setAttribute('data-etat', 'erreur');
-            statut.textContent = 'Ça n\'est pas passé. Réessaie dans un instant.';
-          })
-          .then(function () { bouton.disabled = false; });
-      });
-    });
-  }
-
   /* ---------- Démarrage ---------- */
-  window.KOVA = { config: CONFIG, prix: prix, esc: esc, url: url, tuile: tuile, panier: panier, track: track };
+  window.KOVA = { config: CONFIG, prix: prix, esc: esc, url: url, ancre: ancre, carte: carte, panier: panier, track: track, brancherListe: brancherListe, initBoucles: initBoucles };
 
   function init() {
     rendreGrilles();
     initMenu();
+    initTeaser();
+    initBoucles();
     initPanier();
     initListeAttente();
     document.dispatchEvent(new CustomEvent('kova:pret'));
