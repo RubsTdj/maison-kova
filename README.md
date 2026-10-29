@@ -94,5 +94,6 @@ Chercher `PHASE 2` dans `assets/` :
 
 ## À savoir
 
-- Le texte hébreu (אהבה, כובע) est à faire valider par quelqu'un qui lit l'hébreu.
+- La flamme est la flamme de Breslev, en hommage à Rabbi Nahman : « האש שלי תוקד עד ביאת המשיח » (« Mon feu brûlera jusqu'à la venue du Messie », Hayé Moharan ; le numéro de section varie selon les éditions).
+- Le texte hébreu (אהבה, כובע, האש שלי) est à faire valider par quelqu'un qui lit l'hébreu.
 - Les noms et motifs ne sont pas encore vérifiés à l'INPI / EUIPO.

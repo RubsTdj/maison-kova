@@ -2,9 +2,13 @@
 
 Contexte : Maison KOVA, marque de pièces brodées (en hébreu, « kova » = casquette). Signature : « Plus qu'un style, une vision ». Symbole : l'arche et son point. Drop 01 : Tee Arche, Tee Ahava, Casquette Flamme.
 
+Référence de positionnement : The Kooples, esprit rock, haut de gamme, une marque qui fait premium une fois portée.
+
+Les trois signes : l'arche (signature de la maison), la flamme de Breslev (hommage à Rabbi Nahman : « האש שלי תוקד עד ביאת המשיח », « Mon feu brûlera jusqu'à la venue du Messie », rapporté dans Hayé Moharan), Ahava (אהבה, l'amour). En parler avec justesse et respect.
+
 ## Direction artistique
 - Deux thèmes : luxe silencieux (noir pur, typo fine en capitales espacées, très peu de texte, grandes images) pour l'accueil et La Maison ; maison éditoriale (crème #ECE7DB, codes e-commerce lisibles) pour la boutique, les fiches et le panier.
-- Orange #FF4B1F : la marque (arche, logo sur noir), jamais du texte courant sur fond clair. Rouge #C72B23 et bordeaux #8F222C : couleurs de fil, réservées aux pièces.
+- Orange #FF4B1F : la marque (arche, logo MAISON KOVA dans la navigation sur les deux thèmes), jamais du texte courant sur fond clair. Rouge #C72B23 et bordeaux #8F222C : couleurs de fil, réservées aux pièces.
 - Typo : Anton (titres de la boutique, logo), Space Grotesk (texte, capitales espacées), Space Mono (libellés). Pas de dégradés, traits fins.
 - On montre la qualité des pièces portées et de près. On ne parle pas des étiquettes ni du packaging.
 - Le parcours d'achat doit rester évident : prix, taille, « Ajouter au panier », panier toujours visible, paiement.

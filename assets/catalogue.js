@@ -102,8 +102,11 @@ window.KOVA_CATALOGUE = (function () {
       fil: 'rouge',
       prix: null,
       tailles: null, // taille unique, sangle réglable
-      accroche: 'Là où tout a commencé.',
-      description: 'La flamme brodée en rouge sur le devant, KOVA sur le côté gauche. Chaque langue de feu est séparée de la suivante par un jour de tissu.',
+      // La flamme de Breslev : hommage à Rabbi Nahman, « האש שלי תוקד עד ביאת המשיח » (Hayé Moharan)
+      hebreu: 'האש שלי',
+      sens: 'Mon feu',
+      accroche: 'La flamme de Breslev.',
+      description: 'Un hommage à Rabbi Nahman de Breslev et à sa parole : « Mon feu brûlera jusqu\'à la venue du Messie. » Brodée en rouge sur le devant, KOVA sur le côté gauche.',
       broderie: [
         ['Devant', 'Flamme, 5,5 cm de haut'],
         ['Côté gauche', 'KOVA, 4 cm de large'],
