@@ -5,7 +5,9 @@
   Modèle Shopify : produit > variantes (option « Taille »). handle = handle Shopify,
   variante.key = valeur de l'option, variante.stock = quantityAvailable (phase 2).
 
-  Prix : null tant qu'il n'est pas fixé. Le site affiche alors « Prix dévoilé au lancement ».
+  Prix : null tant qu'il n'est pas fixé. Le site affiche alors « Prix communiqué au lancement ».
+  Visuels : motif = l'œuvre brodée (cartes), image = visuel principal, survol = visuel au survol des cartes.
+  Remplacer image / survol / galerie par les photos d'échantillons dès qu'elles existent.
   Couleurs de fil : celles des fiches techniques (rouge #C72B23, bordeaux #8F222C).
 */
 window.KOVA_CATALOGUE = (function () {
@@ -42,15 +44,16 @@ window.KOVA_CATALOGUE = (function () {
       ],
       matiere: '100 % coton',
       entretien: ENTRETIEN_TEE,
-      image: 'images/drop/tee-arche.webp',
-      alt: 'Tee noir, arche et KOVA brodés en rouge au centre de la poitrine (dessin technique)',
+      motif: 'images/drop/motif-arche-kova.webp',
+      image: 'images/drop/tee-arche-plie.webp',
+      alt: 'Tee noir plié avec son hangtag, arche brodée en rouge au centre de la poitrine',
       survol: 'images/drop/tee-arche-plie.webp',
       galerie: [
-        { type: 'image', src: 'images/drop/tee-arche.webp', alt: 'Tee noir vu de face, broderie centrée (dessin technique)', fond: 'papier', label: 'Face' },
-        { type: 'image', src: 'images/drop/tee-arche-plie.webp', alt: 'Tee noir plié avec son hangtag, arche brodée en rouge', fond: 'noir', label: 'Plié', cover: true },
-        { type: 'video', src: 'media/broderie-2.mp4', poster: 'media/broderie-2.webp', alt: 'L\'arche en train d\'être brodée en fil rouge', fond: 'noir', label: 'À la brodeuse' },
-        { type: 'image', src: 'images/drop/arche-gros-plan.webp', alt: 'Gros plan sur l\'arche brodée en relief, fil rouge sur coton noir', fond: 'noir', label: 'Gros plan', cover: true },
-        { type: 'motif', src: 'images/drop/motif-arche-kova.webp', alt: 'Le motif : arche et KOVA en rouge', fond: 'noir', label: 'Le motif' }
+        { type: 'image', src: 'images/drop/tee-arche-plie.webp', alt: 'Tee noir plié avec son hangtag, arche brodée en rouge', fond: 'noir', cover: true },
+        { type: 'image', src: 'images/drop/dessin-tee-arche.webp', alt: 'Dessin coté : arche et KOVA de 5 × 8,7 cm, centrés à mi-poitrine', fond: 'dessin' },
+        { type: 'video', src: 'media/broderie-2.mp4', poster: 'media/broderie-2.webp', alt: 'L\'arche en train d\'être brodée en fil rouge', fond: 'noir' },
+        { type: 'image', src: 'images/drop/arche-gros-plan.webp', alt: 'Gros plan sur l\'arche brodée en relief, fil rouge sur coton noir', fond: 'noir', cover: true },
+        { type: 'motif', src: 'images/drop/motif-arche-kova.webp', alt: 'Le motif : arche et KOVA en rouge', fond: 'noir' }
       ]
     },
     {
@@ -74,12 +77,13 @@ window.KOVA_CATALOGUE = (function () {
       ],
       matiere: '100 % coton',
       entretien: ENTRETIEN_TEE,
-      image: 'images/drop/tee-ahava.webp',
-      alt: 'Tee blanc, cœur Ahava et KOVA brodés en bordeaux sur la poitrine gauche (dessin technique)',
-      survol: null,
+      motif: 'images/drop/motif-ahava-kova.webp',
+      image: 'images/drop/dessin-tee-ahava.webp',
+      alt: 'Dessin coté du tee blanc : cœur Ahava et KOVA de 6 × 7,5 cm sur la poitrine gauche',
+      survol: 'images/drop/dessin-tee-ahava.webp',
       galerie: [
-        { type: 'image', src: 'images/drop/tee-ahava.webp', alt: 'Tee blanc vu de face, broderie poitrine gauche (dessin technique)', fond: 'papier', label: 'Face' },
-        { type: 'motif', src: 'images/drop/motif-ahava-kova.webp', alt: 'Le motif : cœur Ahava et KOVA en bordeaux', fond: 'blanc', label: 'Le motif' }
+        { type: 'motif', src: 'images/drop/motif-ahava-kova.webp', alt: 'Le motif : cœur Ahava et KOVA en bordeaux', fond: 'blanc' },
+        { type: 'image', src: 'images/drop/dessin-tee-ahava.webp', alt: 'Dessin coté : cœur Ahava et KOVA de 6 × 7,5 cm sur la poitrine gauche', fond: 'dessin' }
       ]
     },
     {
@@ -101,13 +105,14 @@ window.KOVA_CATALOGUE = (function () {
       ],
       matiere: null,
       entretien: null,
-      image: 'images/drop/casquette-flamme.webp',
+      motif: 'images/drop/motif-flamme.webp',
+      image: 'images/drop/casquette-flamme-studio.webp',
       alt: 'Casquette noire, flamme brodée en rouge sur le devant et KOVA sur le côté',
-      survol: 'images/drop/casquette-flamme-detail.webp',
+      survol: 'images/drop/casquette-flamme-studio.webp',
       galerie: [
-        { type: 'image', src: 'images/drop/casquette-flamme.webp', alt: 'Casquette noire vue de trois quarts, flamme rouge brodée', fond: 'papier', label: 'Trois quarts' },
-        { type: 'image', src: 'images/drop/casquette-flamme-detail.webp', alt: 'Gros plan : flamme rouge sur le devant, KOVA sur le côté', fond: 'noir', label: 'Gros plan', cover: true },
-        { type: 'motif', src: 'images/drop/motif-flamme.webp', alt: 'Le motif : la flamme en rouge', fond: 'noir', label: 'Le motif' }
+        { type: 'image', src: 'images/drop/casquette-flamme-studio.webp', alt: 'Casquette noire vue de trois quarts, flamme rouge brodée', fond: 'noir', cover: true },
+        { type: 'image', src: 'images/drop/casquette-flamme-detail.webp', alt: 'Gros plan : flamme rouge sur le devant, KOVA sur le côté', fond: 'noir', cover: true },
+        { type: 'motif', src: 'images/drop/motif-flamme.webp', alt: 'Le motif : la flamme en rouge', fond: 'noir' }
       ]
     }
   ];

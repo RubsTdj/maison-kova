@@ -43,16 +43,19 @@
     try { if (window.posthog && window.posthog.capture) window.posthog.capture(evenement, props || {}); } catch (e) {}
   }
 
-  /* ---------- Cartes produit ---------- */
+  /* ---------- Cartes produit ----------
+     Le motif brodé sur la couleur du tissu ; au survol, le visuel de la pièce. */
   function carte(p) {
     var statut = CONFIG.venteOuverte ? prix(p.prix) : 'Bientôt';
+    var dessin = /dessin-/.test(p.survol || '');
     return '<a class="card rv" href="' + url(p) + '" aria-label="' + esc(p.nom + ', ' + p.libelle.toLowerCase() + ', ' + p.nomFil.toLowerCase() + '. ' + statut) + '">' +
-      '<div class="card-media' + (p.survol ? ' has-alt' : '') + '">' +
-        '<span class="card-tag"><span>' + esc(p.libelle) + '</span><span class="fil" style="--fil:' + p.hexFil + '">' + esc(p.nomFil) + '</span></span>' +
-        '<img class="main" src="' + esc(p.image) + '" alt="' + esc(p.alt) + '" loading="lazy" width="1100" height="917">' +
-        (p.survol ? '<img class="alt" src="' + esc(p.survol) + '" alt="" loading="lazy" aria-hidden="true">' : '') +
+      '<div class="card-media fond-' + esc(p.tissu) + '">' +
+        '<img class="motif" src="' + esc(p.motif) + '" alt="" loading="lazy">' +
+        (p.survol ? '<img class="alt' + (dessin ? ' dessin' : '') + '" src="' + esc(p.survol) + '" alt="" loading="lazy">' : '') +
       '</div>' +
-      '<div class="card-bar"><span class="name">' + esc(p.nom) + '</span><span class="state">' + esc(statut) + ' <span class="arr" aria-hidden="true">→</span></span></div>' +
+      '<div class="card-cap"><span class="name">' + esc(p.nom) + '</span>' +
+        '<span class="fil label" style="--fil:' + p.hexFil + '">' + esc(p.nomFil.replace('Fil ', '')) + '</span>' +
+        '<span class="type label">' + esc(p.libelle) + ' · ' + esc(statut) + '</span></div>' +
       '</a>';
   }
 
@@ -65,6 +68,14 @@
       else if (v !== 'tous') liste = v.split(',').map(function (h) { return C.produit(h.trim()); }).filter(Boolean);
       g.innerHTML = liste.map(carte).join('');
     });
+  }
+
+  /* ---------- Header : opaque dès qu'on quitte le haut de page ---------- */
+  function initHeader() {
+    var racine = document.documentElement, attente = false;
+    function maj() { racine.classList.toggle('is-scrolled', window.scrollY > 40); attente = false; }
+    window.addEventListener('scroll', function () { if (!attente) { attente = true; requestAnimationFrame(maj); } }, { passive: true });
+    maj();
   }
 
   /* ---------- Menu mobile ---------- */
@@ -110,7 +121,7 @@
     }
     function majSon() {
       btnSon.setAttribute('aria-pressed', video.muted ? 'false' : 'true');
-      btnSon.querySelector('span').textContent = video.muted ? 'Son coupé' : 'Son activé';
+      btnSon.setAttribute('aria-label', video.muted ? 'Activer le son' : 'Couper le son');
     }
 
     video.muted = true;
@@ -195,14 +206,14 @@
       envoyerInscription(donnees).then(function (r) {
         if (r.demo) {
           // Honnête tant que rien n'est branché : on ne prétend pas avoir enregistré l'adresse.
-          statut.textContent = 'Merci. Version de démonstration : la liste d\'attente n\'est pas encore branchée, ton adresse n\'a pas été enregistrée.';
+          statut.textContent = 'Merci. Version de démonstration : la liste n\'est pas encore branchée, votre adresse n\'a pas été enregistrée.';
         } else {
           form.reset();
-          statut.textContent = plus.confirmation || 'C\'est noté. Un seul e-mail, le jour du lancement.';
+          statut.textContent = plus.confirmation || 'C\'est noté. Vous recevrez un seul e-mail, le jour de la sortie.';
         }
       }).catch(function () {
         statut.setAttribute('data-etat', 'erreur');
-        statut.textContent = 'Ça n\'est pas passé. Réessaie dans un instant.';
+        statut.textContent = 'L\'inscription n\'a pas abouti. Merci de réessayer dans un instant.';
       }).then(function () { bouton.disabled = false; });
     });
   }
@@ -332,7 +343,7 @@
     var corps = tiroir.querySelector('[data-drawer-body]');
     var pied = tiroir.querySelector('[data-drawer-foot]');
     if (!lignes.length) {
-      corps.innerHTML = '<div class="empty"><p>Ton panier<br>est vide.</p><a class="btn" href="' + ancre('drop') + '">Voir le drop <span class="arr" aria-hidden="true">→</span></a></div>';
+      corps.innerHTML = '<div class="empty"><p>Votre panier<br>est vide.</p><a class="btn" href="' + ancre('drop') + '">Découvrir le Drop 01 <span class="arr" aria-hidden="true">→</span></a></div>';
       pied.innerHTML = '';
       pied.hidden = true;
       return;
@@ -361,7 +372,7 @@
   // PHASE 2 : rediriger vers le checkout Shopify (cart.checkoutUrl).
   function commander() {
     track('checkout_click', { items: panier.nombre(), subtotal: panier.sousTotal() });
-    tiroir.querySelector('[data-checkout-msg]').innerHTML = '<div class="checkout-msg">Le paiement n\'est pas encore branché.</div>';
+    tiroir.querySelector('[data-checkout-msg]').innerHTML = '<div class="checkout-msg">Le paiement n\'est pas encore ouvert.</div>';
   }
   function ouvrirTiroir() {
     if (!tiroir) creerTiroir();
@@ -406,6 +417,7 @@
 
   function init() {
     rendreGrilles();
+    initHeader();
     initMenu();
     initTeaser();
     initBoucles();

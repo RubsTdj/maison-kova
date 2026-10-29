@@ -2,6 +2,8 @@
 
 Site de la marque Maison KOVA. Signature : « Plus qu'un style, une vision ». HTML, CSS et JavaScript purs : aucun framework, aucun build. Les polices viennent de Google Fonts.
 
+Registre : luxe streetwear. Noir profond, beaucoup d'espace, grandes images, orange rare (marque et action principale), textes au vouvoiement.
+
 En ligne (GitHub Pages) : https://rubstdj.github.io/maison-kova/
 
 ## État : pré-lancement du Drop 01
@@ -14,15 +16,15 @@ Trois pièces, toutes brodées :
 | Tee Ahava (t-shirt blanc) | Cœur Ahava + KOVA, 6 × 7,5 cm, poitrine gauche | Bordeaux #8F222C |
 | Casquette Flamme (noire) | Flamme 5,5 cm devant, KOVA 4 cm côté gauche | Rouge #C72B23 |
 
-Pas de vente pour l'instant : chaque fiche propose « Me prévenir », avec la taille choisie (utile pour caler les quantités à produire). Le panier existe dans le code mais reste masqué.
+Pas de vente pour l'instant : chaque fiche propose « M'avertir de la sortie », avec la taille choisie (utile pour caler les quantités à produire). Le panier existe dans le code mais reste masqué.
 
 ## Pages et parcours
 
-- **Accueil** (`index.html`) : teaser vidéo (vertical sur mobile, paysage sur desktop, son activable) > manifeste > Drop 01 (3 cartes) > savoir-faire (broderie) > liste d'attente.
+- **Accueil** (`index.html`) : teaser vidéo plein écran (vertical sur mobile, paysage sur desktop, son activable, le logo du header apparaît après le teaser) > manifeste > Drop 01 (3 cartes) > plein cadre « Brodé, pas imprimé » > savoir-faire > rejoindre la liste.
 - **Fiche produit** (`produit.html?p=tee-arche&t=m`) : galerie, taille, « Me prévenir », détails de broderie, entretien, guide des tailles, livraison, le reste du drop.
-- **La Maison** (`maison.html`) : origine du nom, les trois signes, les broderies au millimètre, étiquettes et packaging.
+- **La Maison** (`maison.html`) : origine du nom, les trois signes, les dessins cotés au millimètre, étiquettes et packaging.
 - **Mentions légales et confidentialité** (`legal.html`) : modèle à compléter.
-- **Menu** : Drop 01 (et les 3 pièces en accès direct sur mobile), La Maison, Me prévenir.
+- **Menu** : Drop 01 (et les 3 pièces en accès direct sur mobile), La Maison, Rejoindre la liste.
 
 ## Fichiers
 
@@ -51,7 +53,11 @@ python3 -c "from PIL import Image; import sys; [Image.open(f).save(f[:-4]+'.webp
 
 ## Visuels
 
-- Le Tee Arche et le Tee Ahava sont montrés avec leurs **dessins techniques** : il n'existe pas encore de photo du tee blanc. À remplacer par des photos d'échantillons dès qu'ils existent (même cadrage pour les trois pièces).
+- **Cartes** : chaque pièce est présentée par son motif brodé sur la couleur du tissu (champ `motif`), et par son visuel au survol (`survol`). Les trois cartes restent cohérentes tant qu'il n'y a pas de photos.
+- **Dessins cotés** (`images/drop/dessin-tee-*.webp`) : silhouettes au trait avec les vrais logos, à l'échelle des fiches techniques (5 unités = 1 cm). Ils remplacent les fiches techniques d'origine.
+- **Casquette** : rendu existant, flamme repassée en rouge, posé sur un fond studio sombre.
+- **Il n'existe aucune photo du tee blanc.** La génération IA via Canva a été tentée mais les crédits du compte sont épuisés. Les références sont prêtes dans `images/import/ref/` (publiques sur GitHub, donc importables par Canva). Dès qu'il y a des photos (échantillons ou IA), remplacer `image`, `survol` et `galerie` dans `assets/catalogue.js`, sans toucher au reste.
+- Les sources photo font moins de 1 000 px de large : le plein cadre et les gros plans perdent en netteté sur grand écran. Prévoir des photos d'au moins 2 400 px.
 - La flamme de la casquette et l'arche du tee plié étaient brodées en orange sur les visuels d'origine. Elles ont été repassées dans le rouge des fiches techniques (#C72B23) pour montrer ce que le client recevra. Les étiquettes et le hangtag restent orange, comme le vrai packaging.
 - Les anciens visuels des 18 casquettes ont été retirés du site. Ils restent dans l'historique Git (commit `f812679` et antérieurs).
 
