@@ -65,10 +65,10 @@ html.is-scrolled [data-home] .site-header, [data-home] .site-header.menu-open { 
 .ul { position: relative; text-decoration: none; padding: 10px 0; }
 .ul::after { content: ""; position: absolute; left: 0; right: 0; bottom: 4px; height: 1px; background: currentColor; transform: scaleX(0); transform-origin: right; transition: transform .6s var(--ease); }
 .ul:hover::after, .ul[aria-current="page"]::after { transform: scaleX(1); transform-origin: left; }
-/* Logo : MAISON exactement aussi large que KOVA (lettres réparties), comme sur le logo officiel */
-.logo { text-decoration: none; display: inline-grid; justify-items: stretch; line-height: 1; color: var(--logo); }
-.logo .maison { display: flex; justify-content: space-between; font-family: var(--f-mono); font-size: 7px; font-weight: 700; margin-bottom: 4px; }
-.logo .kova { font-family: var(--f-titre); font-size: 24px; letter-spacing: .08em; margin-right: -.08em; }
+/* Logo : le fichier officiel (assets/logo-maison-kova.svg), orange sur les deux thèmes */
+.logo { text-decoration: none; display: block; line-height: 0; transition: opacity .4s; }
+.logo img { display: block; height: 32px; width: auto; }
+.logo:hover { opacity: .8; }
 
 .cart-btn { display: inline-flex; align-items: center; gap: 10px; background: none; border: 0; cursor: pointer; padding: 10px 0; }
 .cart-btn[hidden] { display: none; }
@@ -90,6 +90,7 @@ html.is-scrolled [data-home] .site-header, [data-home] .site-header.menu-open { 
   .menu-btn { display: inline-flex; grid-column: 1; grid-row: 1; }
   .menu-btn .menu-txt { display: none; }
   .logo { grid-column: 2; grid-row: 1; }
+  .logo img { height: 28px; }
   .header-actions { grid-column: 3; grid-row: 1; gap: 16px; }
   .header-actions .lien-liste { display: none; }
   .nav {
