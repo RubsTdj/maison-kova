@@ -16,12 +16,11 @@ Les trois signes : l'arche (signature de la maison), la flamme de Breslev (ses f
 
 ## Phase 1 (maintenant)
 - Site statique sur GitHub Pages. Pas de framework ni de build.
-- Panier actif pour les tests (`venteOuverte: true`), prix et paiement à venir.
+- Panier actif (`venteOuverte: true`). Paiement, prix et stock par Shopify via l'API Storefront depuis le navigateur (`assets/shopify.js`), sans changer de front. Il manque le domaine et le jeton public de la boutique (`docs/SHOPIFY.md`).
 
-## Phase 2, e-commerce (plus tard, ne pas commencer sans accord)
-- Shopify comme moteur de commerce (stock, commandes, paiement, TVA), front Next.js en headless via Storefront API.
-- Supabase uniquement pour la liste d'attente et les drops. Resend pour les e-mails.
-- Ne jamais mettre de jeton Admin côté client. Revérifier le stock au moment de l'ajout au panier.
+## Plus tard (ne pas commencer sans accord)
+- Supabase pour les inscriptions et les drops, Resend pour les e-mails.
+- Ne jamais mettre de jeton Admin ou privé côté client : seul le jeton public Storefront y a sa place.
 
 ## Interdits
 - Ne rien déployer ailleurs que GitHub Pages sans demande explicite.

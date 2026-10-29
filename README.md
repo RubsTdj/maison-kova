@@ -21,7 +21,7 @@ Trois pièces, toutes brodées :
 | Tee Ahava (t-shirt blanc) | Cœur Ahava + KOVA, 6 × 7,5 cm, poitrine gauche | Bordeaux #8F222C |
 | Casquette Flamme (noire) | Flamme 5,5 cm devant, KOVA 4 cm côté gauche | Rouge #C72B23 |
 
-Le parcours d'achat est actif (`venteOuverte: true`) pour pouvoir le tester. Les prix ne sont pas encore fixés (« Prix à venir ») et le paiement n'est pas branché : « Passer au paiement » l'indique honnêtement.
+Le parcours d'achat est actif (`venteOuverte: true`). Le paiement passe par **Shopify** : le branchement est prêt dans `assets/shopify.js`, il ne manque que le domaine de la boutique et son jeton public (voir `docs/SHOPIFY.md`). En attendant, les prix s'affichent « Prix à venir » et « Passer au paiement » indique que le paiement n'est pas encore branché.
 
 ## Pages et parcours
 
@@ -41,13 +41,15 @@ Le parcours d'achat est actif (`venteOuverte: true`) pour pouvoir le tester. Les
 | `assets/kova.css` | Toute la DA (couleurs, typos, composants) |
 | `assets/kova.js` | Cartes (accueil et boutique), filtres, menu, teaser vidéo, inscriptions, panier, et l'interrupteur `venteOuverte` |
 | `assets/produit.js` | Rendu et interactions de la fiche produit |
+| `assets/shopify.js` | Branchement Shopify : prix et stock lus dans Shopify, panier et redirection vers le paiement |
+| `docs/SHOPIFY.md` | Mise en place de la boutique Shopify, étape par étape |
 | `media/` | Teasers compressés (1,5 Mo chacun), boucles de broderie, images d'attente, image de partage `og.jpg` |
 | `images/drop/` | Visuels des pièces, gros plans, motifs brodés, dessins cotés |
 | `brand/` | Fichiers de marque en pleine résolution (arche en SVG vectoriel, logos, motifs) |
 
 ## Modifier
 
-- **Prix** : champ `prix` de chaque pièce dans `assets/catalogue.js` (en euros TTC). Tant qu'il vaut `null`, le site affiche « Prix à venir ».
+- **Prix et stock** : dans Shopify, une fois branché. Avant cela (ou si Shopify ne répond pas), champ `prix` de `assets/catalogue.js`, en euros TTC ; `null` affiche « Prix à venir ».
 - **Tailles** : `TAILLES_TEE` en haut de `assets/catalogue.js` (S à XL, **provisoire**).
 - **Vente ou pré-lancement** : `venteOuverte` dans `assets/kova.js`. À `true`, parcours d'achat complet. À `false`, le panier disparaît et les fiches proposent « M'avertir de la sortie » avec la taille. Avant une mise en ligne publique en `true`, il faut des prix et un paiement (voir Phase 2).
 - **À compléter** : prix, mesures du guide des tailles, délais et frais de livraison, composition de la casquette, mentions légales (entre crochets), e-mail de contact et réseaux sociaux.
@@ -83,14 +85,11 @@ GitHub Pages, branche `main`, dossier racine (Settings > Pages > Deploy from a b
 
 Pour un domaine personnalisé (ex. `maisonkova.fr`) : Settings > Pages > Custom domain, puis un enregistrement DNS chez le registrar. Penser alors à mettre à jour l'URL de `og:image` dans les pages.
 
-## Phase 2 (e-commerce), points de branchement
+## Branchements
 
-Chercher `PHASE 2` dans `assets/` :
-
-- `catalogue.js` suit le modèle Shopify (produit > variantes avec l'option « Taille », `handle`, `stock` = `quantityAvailable`).
-- `kova.js` > `CONFIG.listeAttenteEndpoint` : URL d'insertion de la liste d'attente (ex. table Supabase avec une policy RLS en insertion seule). Chaque inscription envoie `{ email, produits, taille, source }`. Tant que l'URL est vide, le formulaire dit honnêtement que l'adresse n'est pas enregistrée.
-- `kova.js` > `stockDisponible()` et `commander()` : stock et checkout Shopify.
-- `kova.js` > `track()` : les événements `waitlist_submit`, `teaser_play`, `teaser_sound`, `add_to_cart`, `checkout_click` partent vers PostHog dès que le snippet est ajouté (prévoir le consentement, voir `legal.html`).
+- **Paiement, prix, stock : Shopify** (`assets/shopify.js`, guide dans `docs/SHOPIFY.md`). API Storefront appelée depuis le navigateur avec le jeton public : lecture des pièces par `handle`, puis `cartCreate` et redirection vers `cart.checkoutUrl`.
+- **Inscriptions** (liste, nouveautés, alerte de sortie) : `kova.js` > `CONFIG.listeAttenteEndpoint` (ex. table Supabase avec une policy RLS en insertion seule). Chaque inscription envoie `{ email, produits, taille, source }`. Tant que l'URL est vide, le formulaire dit honnêtement que l'adresse n'est pas enregistrée.
+- **Mesure d'audience** : `kova.js` > `track()`. Les événements `waitlist_submit`, `teaser_play`, `add_to_cart`, `checkout_click` partent vers PostHog dès que le snippet est ajouté (prévoir le consentement, voir `legal.html`).
 
 ## À savoir
 

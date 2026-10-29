@@ -13,6 +13,9 @@
   var main = document.getElementById('contenu');
   var venteOuverte = K.config.venteOuverte;
 
+  // La fiche attend que les prix et stocks (Shopify, s'il est branché) soient appliqués au catalogue
+  function demarrer() {
+
   var params = new URLSearchParams(location.search);
   var produit = C.produit(params.get('p'));
 
@@ -43,14 +46,15 @@
       '<legend class="field-label"><span>Taille <span data-taille-label style="font-weight:400">' + (variante ? ': ' + esc(variante.taille) : '') + '</span></span>' +
       '<button type="button" data-ouvrir-guide>Guide des tailles</button></legend>' +
       '<div class="sizes">' + produit.variantes.map(function (v) {
-        return '<label class="size"><input type="radio" name="taille" value="' + esc(v.key) + '"' + (variante === v ? ' checked' : '') + '><span>' + esc(v.taille) + '</span></label>';
+        var epuise = v.stock === 0;
+        return '<label class="size' + (epuise ? ' epuise' : '') + '"><input type="radio" name="taille" value="' + esc(v.key) + '"' + (variante === v && !epuise ? ' checked' : '') + (epuise ? ' disabled aria-label="' + esc(v.taille) + ', épuisé"' : '') + '><span>' + esc(v.taille) + '</span></label>';
       }).join('') + '</div></fieldset>';
   }
 
   function actionHTML() {
     if (venteOuverte) {
       return '<div style="display:flex;flex-direction:column;gap:10px">' +
-        '<button class="btn block" type="button" data-ajouter><span data-ajouter-label>Ajouter au panier</span></button>' +
+        '<button class="btn block" type="button" data-ajouter' + (touteEpuisee ? ' disabled' : '') + '><span data-ajouter-label>' + (touteEpuisee ? 'Épuisé' : 'Ajouter au panier') + '</span></button>' +
         '<p class="msg" role="status" aria-live="polite" data-msg></p></div>';
     }
     return '<form class="notify" data-notify novalidate>' +
@@ -87,6 +91,12 @@
     return html + '</div>';
   }
 
+  function prixAffiche() {
+    if (variante && typeof variante.prix === 'number') return K.prix(variante.prix);
+    return (produit.prixVariable ? 'Dès ' : '') + K.prix(produit.prix);
+  }
+  var touteEpuisee = produit.variantes.every(function (v) { return v.stock === 0; });
+
   var n = produit.galerie.length;
   main.innerHTML =
     '<div class="wrap pdp-page">' +
@@ -103,7 +113,7 @@
         '<div class="buy">' +
           '<div style="display:flex;flex-direction:column;gap:14px">' +
             '<h1>' + esc(produit.nom) + '</h1>' +
-            '<div class="prix">' + esc(K.prix(produit.prix)) + '</div>' +
+            '<div class="prix" data-prix>' + esc(prixAffiche()) + '</div>' +
           '</div>' +
           '<p class="desc"><strong>' + esc(produit.accroche) + '</strong> ' + esc(produit.description) + '</p>' +
           '<dl class="attributs">' +
@@ -121,7 +131,7 @@
         '<div class="p-grid deux">' + C.produits.filter(function (p) { return p !== produit; }).map(K.carte).join('') + '</div>' +
       '</section>' +
     '</div>' +
-    (venteOuverte ? '<div class="buy-bar" data-buy-bar aria-hidden="true"><div class="info"><strong>' + esc(produit.nom) + '</strong><span data-bar-info>' + esc(K.prix(produit.prix)) + '</span></div><button class="btn" type="button" data-ajouter-bar tabindex="-1">Ajouter au panier</button></div>' : '');
+    (venteOuverte ? '<div class="buy-bar" data-buy-bar aria-hidden="true"><div class="info"><strong>' + esc(produit.nom) + '</strong><span data-bar-info>' + esc(prixAffiche()) + '</span></div><button class="btn" type="button" data-ajouter-bar tabindex="-1">Ajouter au panier</button></div>' : '');
 
   document.title = produit.nom + ', ' + produit.libelle.toLowerCase() + '. Maison KOVA';
   var meta = document.querySelector('meta[name="description"]');
@@ -141,6 +151,9 @@
     if (e.target.name !== 'taille') return;
     variante = tailleChoisie();
     labelTaille.textContent = ': ' + variante.taille;
+    main.querySelector('[data-prix]').textContent = prixAffiche();
+    var info = document.querySelector('[data-bar-info]');
+    if (info) info.textContent = prixAffiche() + ' · Taille ' + variante.taille;
     if (champTailles) champTailles.classList.remove('erreur');
     if (msg) msg.textContent = '';
     try { history.replaceState(null, '', K.url(produit, variante)); } catch (err) {}
@@ -207,4 +220,8 @@
   }
 
   K.initBoucles();
+  }
+
+  if (K.pret) demarrer();
+  else document.addEventListener('kova:pret', demarrer, { once: true });
 })();

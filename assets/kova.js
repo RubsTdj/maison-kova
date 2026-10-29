@@ -54,7 +54,7 @@
     return '<a class="p-card rv" href="' + url(p) + '" data-categorie="' + esc(p.categorie) + '">' +
       '<span class="p-media"><img class="main" src="' + esc(p.image) + '" alt="' + esc(p.alt) + '" loading="lazy">' +
       (p.survol ? '<img class="alt" src="' + esc(p.survol) + '" alt="" loading="lazy">' : '') + '</span>' +
-      '<span class="p-info"><span class="nom">' + esc(p.nom) + '</span><span class="prix">' + esc(prix(p.prix)) + '</span>' +
+      '<span class="p-info"><span class="nom">' + esc(p.nom) + '</span><span class="prix">' + (p.prixVariable ? 'Dès ' : '') + esc(prix(p.prix)) + '</span>' +
       '<span class="var"><span class="dot" style="--c:' + p.hexTissu + '"></span>' + esc(p.nomTissu) + ' · Broderie ' + esc(p.filCourt.toLowerCase()) + '</span></span></a>';
   }
 
@@ -249,13 +249,14 @@
     var s = typeof r.variante.stock === 'number' ? r.variante.stock : Infinity;
     return Promise.resolve(Math.min(s, CONFIG.quantiteMax));
   }
-  function totalConnu(lignes) { return lignes.every(function (l) { return typeof l.produit.prix === 'number'; }); }
+  function prixLigne(l) { return typeof l.variante.prix === 'number' ? l.variante.prix : l.produit.prix; }
+  function totalConnu(lignes) { return lignes.every(function (l) { return typeof prixLigne(l) === 'number'; }); }
 
   var dernierAjout = null;
   var panier = {
     lignes: lignesValides,
     nombre: function () { return lignesValides().reduce(function (n, l) { return n + l.qte; }, 0); },
-    sousTotal: function () { return lignesValides().reduce(function (t, l) { return t + l.qte * (l.produit.prix || 0); }, 0); },
+    sousTotal: function () { return lignesValides().reduce(function (t, l) { return t + l.qte * (prixLigne(l) || 0); }, 0); },
     ajouter: function (id, qte) {
       qte = Math.max(1, qte | 0);
       return stockDisponible(id).then(function (dispo) {
@@ -369,7 +370,7 @@
         '<output aria-live="polite">' + l.qte + '</output>' +
         '<button type="button" data-plus="' + esc(l.id) + '" aria-label="Ajouter un"' + (l.qte >= CONFIG.quantiteMax ? ' disabled' : '') + '>+</button></div>' +
         '<button class="rm" type="button" data-retirer="' + esc(l.id) + '">Retirer</button></div></div>' +
-        '<div class="lp">' + (typeof p.prix === 'number' ? prix(l.qte * p.prix) : 'Prix à venir') + '</div>' +
+        '<div class="lp">' + (typeof prixLigne(l) === 'number' ? prix(l.qte * prixLigne(l)) : 'Prix à venir') + '</div>' +
         '</li>';
     }).join('') + '</ul>';
     pied.innerHTML =
@@ -379,10 +380,28 @@
       '<button class="btn ghost block" type="button" data-cart-close>Continuer mes achats</button>' +
       '<div data-checkout-msg aria-live="polite"></div>';
   }
-  // PHASE 2 : rediriger vers le checkout Shopify (cart.checkoutUrl).
+  // Paiement : panier Shopify (cartCreate) puis redirection vers le paiement Shopify (assets/shopify.js)
   function commander() {
+    var zone = tiroir.querySelector('[data-checkout-msg]');
+    var bouton = tiroir.querySelector('[data-commander]');
+    var S = window.KOVA_SHOPIFY;
     track('checkout_click', { items: panier.nombre(), subtotal: panier.sousTotal() });
-    tiroir.querySelector('[data-checkout-msg]').innerHTML = '<div class="checkout-msg">Le paiement n\'est pas encore branché. Votre panier reste enregistré sur cet appareil.</div>';
+    if (!S || !S.actif) {
+      zone.innerHTML = '<div class="checkout-msg">Le paiement n\'est pas encore branché. Votre panier reste enregistré sur cet appareil.</div>';
+      return;
+    }
+    bouton.disabled = true;
+    bouton.textContent = 'Ouverture du paiement…';
+    zone.innerHTML = '';
+    S.paiement(lignesValides()).then(function (adresse) {
+      window.location.href = adresse;
+    }).catch(function (e) {
+      bouton.disabled = false;
+      bouton.textContent = 'Passer au paiement';
+      zone.innerHTML = '<div class="checkout-msg">' + (e.message === 'variante-inconnue'
+        ? 'Une pièce de votre panier n\'est plus disponible. Retirez-la pour continuer.'
+        : 'Le paiement n\'a pas pu s\'ouvrir. Merci de réessayer dans un instant.') + '</div>';
+    });
   }
   function ouvrirTiroir() {
     if (!tiroir) creerTiroir();
@@ -428,9 +447,14 @@
   }
 
   /* ---------- Démarrage ---------- */
-  window.KOVA = { config: CONFIG, prix: prix, esc: esc, url: url, carte: carte, panier: panier, track: track, brancherListe: brancherListe, initBoucles: initBoucles };
+  window.KOVA = { config: CONFIG, prix: prix, esc: esc, url: url, carte: carte, panier: panier, track: track, brancherListe: brancherListe, initBoucles: initBoucles, pret: false };
 
+  // Démarrage : on attend les prix et stocks Shopify (s'ils sont branchés) avant d'afficher les pièces
   function init() {
+    var shopify = window.KOVA_SHOPIFY ? window.KOVA_SHOPIFY.pret : Promise.resolve(false);
+    shopify.then(demarrer, demarrer);
+  }
+  function demarrer() {
     rendreGrilles();
     initFiltres();
     initHeader();
@@ -439,6 +463,7 @@
     initBoucles();
     initPanier();
     document.querySelectorAll('[data-waitlist]').forEach(function (f) { brancherListe(f); });
+    window.KOVA.pret = true;
     document.dispatchEvent(new CustomEvent('kova:pret'));
   }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
