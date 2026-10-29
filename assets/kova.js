@@ -4,7 +4,7 @@
 
   CONFIG.venteOuverte :
   - true  : parcours d'achat complet (ajout au panier, panier, bouton de paiement).
-  - false : pré-lancement. Le panier disparaît, les fiches proposent « M'avertir de la sortie ».
+  - false : pré-lancement. Le panier disparaît, les fiches proposent « M'avertir de la sortie ».
 
   Phase 2 (Shopify, Supabase, PostHog) : points de branchement signalés par "PHASE 2".
 */

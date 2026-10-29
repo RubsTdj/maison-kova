@@ -2,10 +2,10 @@
   Catalogue Maison KOVA, Drop 01.
   Source unique pour l'accueil, la boutique, la fiche produit et le panier.
 
-  Modèle Shopify : produit > variantes (option « Taille »). handle = handle Shopify,
+  Modèle Shopify : produit > variantes (option « Taille »). handle = handle Shopify,
   variante.key = valeur de l'option, variante.stock = quantityAvailable (phase 2).
 
-  Prix : en euros TTC. null tant qu'il n'est pas fixé : le site affiche alors « Prix à venir ».
+  Prix : en euros TTC. null tant qu'il n'est pas fixé : le site affiche alors « Prix à venir ».
   Visuels : image = visuel principal (cartes), survol = second visuel au survol, galerie = fiche produit.
   Couleurs de fil : celles des fiches techniques (rouge #C72B23, bordeaux #8F222C).
 */
@@ -102,13 +102,14 @@ window.KOVA_CATALOGUE = (function () {
       fil: 'rouge',
       prix: null,
       tailles: null, // taille unique, sangle réglable
-      // La flamme de Breslev : hommage à Rabbi Nahman, « האש שלי תוקד עד ביאת המשיח » (Hayé Moharan)
+      // La flamme de Breslev : hommage à Rabbi Nahman, « האש שלי תוקד עד ביאת המשיח » (Hayé Moharan)
       hebreu: 'האש שלי',
       sens: 'Mon feu',
       accroche: 'La flamme de Breslev.',
-      description: 'Un hommage à Rabbi Nahman de Breslev et à sa parole : « Mon feu brûlera jusqu\'à la venue du Messie. » Brodée en rouge sur le devant, KOVA sur le côté gauche.',
+      description: 'Ses flammes sont formées des lettres hébraïques « mon feu », en hommage à Rabbi Nahman de Breslev et à sa parole : « Mon feu brûlera jusqu\'à la venue du Messie. » Brodée en rouge sur le devant, KOVA sur le côté gauche.',
       broderie: [
         ['Devant', 'Flamme, 5,5 cm de haut'],
+        ['Lettres', 'האש שלי, « mon feu »'],
         ['Côté gauche', 'KOVA, 4 cm de large'],
         ['Fil', 'Rouge #C72B23'],
         ['Taille', 'Unique, sangle réglable']
@@ -133,7 +134,7 @@ window.KOVA_CATALOGUE = (function () {
     p.filCourt = FILS[p.fil].court;
     p.hexFil = FILS[p.fil].hex;
     p.nomCategorie = CATEGORIES.filter(function (c) { return c.cle === p.categorie; })[0].nom;
-    // Variantes Shopify : une par taille, ou « TU » (taille unique)
+    // Variantes Shopify : une par taille, ou « TU » (taille unique)
     p.variantes = (p.tailles || ['TU']).map(function (t) {
       return { key: t.toLowerCase(), taille: t, id: p.handle + '/' + t.toLowerCase() };
     });

@@ -1,7 +1,7 @@
 /*
   Fiche produit (thème clair) : produit.html?p=<handle>&t=<taille>
   Rendue depuis le catalogue (assets/catalogue.js). Phase 2 : même rendu, données issues de Shopify.
-  Parcours : choisir une taille, « Ajouter au panier », le panier s'ouvre avec la confirmation.
+  Parcours : choisir une taille, « Ajouter au panier », le panier s'ouvre avec la confirmation.
   Sur mobile, une barre d'achat reste en bas de l'écran dès que le bouton principal n'est plus visible.
 */
 (function () {

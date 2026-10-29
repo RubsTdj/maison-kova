@@ -4,7 +4,7 @@ Contexte : Maison KOVA, marque de pièces brodées (en hébreu, « kova » = cas
 
 Référence de positionnement : The Kooples, esprit rock, haut de gamme, une marque qui fait premium une fois portée.
 
-Les trois signes : l'arche (signature de la maison), la flamme de Breslev (hommage à Rabbi Nahman : « האש שלי תוקד עד ביאת המשיח », « Mon feu brûlera jusqu'à la venue du Messie », rapporté dans Hayé Moharan), Ahava (אהבה, l'amour). En parler avec justesse et respect.
+Les trois signes : l'arche (signature de la maison), la flamme de Breslev (ses flammes sont formées des lettres האש שלי, « mon feu » ; hommage à Rabbi Nahman : « האש שלי תוקד עד ביאת המשיח », « Mon feu brûlera jusqu'à la venue du Messie », rapporté dans Hayé Moharan), Ahava (אהבה, l'amour). En parler avec justesse et respect.
 
 ## Direction artistique
 - Deux thèmes : luxe silencieux (noir pur, typo fine en capitales espacées, très peu de texte, grandes images) pour l'accueil et La Maison ; maison éditoriale (crème #ECE7DB, codes e-commerce lisibles) pour la boutique, les fiches et le panier.
