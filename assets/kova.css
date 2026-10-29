@@ -65,7 +65,7 @@ html.is-scrolled [data-home] .site-header, [data-home] .site-header.menu-open { 
 .ul { position: relative; text-decoration: none; padding: 10px 0; }
 .ul::after { content: ""; position: absolute; left: 0; right: 0; bottom: 4px; height: 1px; background: currentColor; transform: scaleX(0); transform-origin: right; transition: transform .6s var(--ease); }
 .ul:hover::after, .ul[aria-current="page"]::after { transform: scaleX(1); transform-origin: left; }
-/* Logo : le fichier officiel (assets/logo-maison-kova.svg), orange sur les deux thèmes */
+/* Logo : le fichier fourni par la marque (assets/logo-maison-kova.png), orange sur les deux thèmes */
 .logo { text-decoration: none; display: block; line-height: 0; transition: opacity .4s; }
 .logo img { display: block; height: 32px; width: auto; }
 .logo:hover { opacity: .8; }
@@ -132,7 +132,7 @@ html.is-scrolled [data-home] .site-header, [data-home] .site-header.menu-open { 
 .intro .marque { position: relative; display: block; }
 .intro svg { display: block; height: var(--arche-h); width: auto; overflow: visible; }
 .intro path { fill: var(--orange); fill-opacity: 0; stroke: var(--orange); stroke-width: 1.5; vector-effect: non-scaling-stroke; stroke-dasharray: 1; stroke-dashoffset: 1; animation: trace 1.3s cubic-bezier(.65, 0, .35, 1) .15s forwards, remplir .55s ease 1.3s forwards; }
-.intro .mot { position: absolute; left: 50%; top: calc(100% + 32px); transform: translateX(-50%); white-space: nowrap; color: var(--fg); font-size: 11px; letter-spacing: .6em; margin-right: -.6em; opacity: 0; animation: apparait .7s ease 1.45s forwards; }
+.intro .mot { position: absolute; left: 50%; top: calc(100% + 36px); transform: translateX(-50%); height: calc(var(--arche-h) * .26); width: auto; opacity: 0; animation: apparait .7s ease 1.45s forwards; }
 @keyframes trace { to { stroke-dashoffset: 0; } }
 @keyframes remplir { to { fill-opacity: 1; } }
 @keyframes apparait { to { opacity: 1; } }
