@@ -78,10 +78,11 @@ window.KOVA_CATALOGUE = (function () {
       matiere: '100 % coton',
       entretien: ENTRETIEN_TEE,
       motif: 'images/drop/motif-ahava-kova.webp',
-      image: 'images/drop/dessin-tee-ahava.webp',
-      alt: 'Dessin coté du tee blanc : cœur Ahava et KOVA de 6 × 7,5 cm sur la poitrine gauche',
-      survol: 'images/drop/dessin-tee-ahava.webp',
+      image: 'images/drop/tee-ahava-plie.webp',
+      alt: 'Tee blanc plié avec son hangtag, cœur Ahava et KOVA brodés en bordeaux sur la poitrine gauche',
+      survol: 'images/drop/tee-ahava-plie.webp',
       galerie: [
+        { type: 'image', src: 'images/drop/tee-ahava-plie.webp', alt: 'Tee blanc plié avec son hangtag, cœur Ahava brodé en bordeaux', fond: 'noir', cover: true },
         { type: 'motif', src: 'images/drop/motif-ahava-kova.webp', alt: 'Le motif : cœur Ahava et KOVA en bordeaux', fond: 'blanc' },
         { type: 'image', src: 'images/drop/dessin-tee-ahava.webp', alt: 'Dessin coté : cœur Ahava et KOVA de 6 × 7,5 cm sur la poitrine gauche', fond: 'dessin' }
       ]
