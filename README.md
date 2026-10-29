@@ -26,9 +26,9 @@ Le parcours d'achat est actif (`venteOuverte: true`). Le paiement passe par **Sh
 ## Pages et parcours
 
 - **Accueil** (`index.html`, noir) :
-  - **Chargement** : l'arche se dessine au trait orange, se remplit, puis « MAISON KOVA » apparaît (2,5 s, une fois par session, clic pour passer, absent si l'utilisateur limite les animations).
-  - **La porte** : l'arche reste au centre, la vidéo de broderie se voit à travers son ouverture. En faisant défiler, on entre dans l'arche jusqu'à la broderie en plein écran, puis « Plus qu'un style, une vision » apparaît (`initPorte` dans `kova.js`).
-  - Puis les 3 pièces en grand > « Entrer dans la boutique » > photo portée > un paragraphe > liste.
+  - **Chargement « Brodé »** : l'arche se coud en grand (point de contour, remplissage satiné, point), puis se pose exactement sur l'arche du logo officiel. Une fois par session, un toucher pour passer, absent si l'utilisateur limite les animations (`initCharge` dans `kova.js`).
+  - **Tunnel brodé** : le logo officiel au centre (`assets/logo-maison-kova-arche.png`), et derrière lui des arches en points de couture qui avancent sans fin. Aucun défilement nécessaire ; sur ordinateur, le tunnel suit légèrement la souris.
+  - Puis les 3 pièces en grand > « Entrer dans la boutique » > photo portée > « Point par point » (vidéo de broderie à sa taille d'origine) > un paragraphe > liste.
 - **Boutique** (`boutique.html`, clair) : tout le catalogue, filtres par catégorie (`?c=tees`, `?c=casquettes`), prix visibles, réassurance.
 - **Fiche produit** (`produit.html?p=tee-arche&t=m`, clair) : fil d'Ariane, galerie, prix, couleur et fil, taille (erreur claire si oubliée), « Ajouter au panier », barre d'achat fixe sur mobile, détails, « Vous aimerez aussi ».
 - **Panier** : tiroir latéral clair sur toutes les pages, confirmation d'ajout, quantités, sous-total, « Passer au paiement », « Continuer mes achats ».
@@ -99,6 +99,8 @@ Partage sur les réseaux : les plateformes gardent l'aperçu en cache. Après un
 - **Mesure d'audience** : `kova.js` > `track()`. Les événements `waitlist_submit`, `teaser_play`, `add_to_cart`, `checkout_click` partent vers PostHog dès que le snippet est ajouté (prévoir le consentement, voir `legal.html`).
 
 ## À savoir
+
+- Logos : la navigation et le haut de page utilisent les fichiers fournis par la marque (`brand/maison-kova-orange.png`, `brand/maison-kova-arche-orange-fond-noir.png`), redimensionnés, jamais redessinés. Seule l'arche animée du chargement et la favicon utilisent un tracé vectoriel (identique au fichier à 99,96 %), parce qu'une image ne peut pas être « cousue » : à la fin du chargement, c'est le logo officiel qui reste à l'écran. À remplacer par le fichier vectoriel d'origine du graphiste dès qu'il est disponible.
 
 - La flamme est la flamme de Breslev, dessinée avec les lettres האש שלי (« mon feu »), en hommage à Rabbi Nahman : « האש שלי תוקד עד ביאת המשיח » (« Mon feu brûlera jusqu'à la venue du Messie », Hayé Moharan ; le numéro de section varie selon les éditions).
 - Le texte hébreu (אהבה, כובע, האש שלי) est à faire valider par quelqu'un qui lit l'hébreu.
