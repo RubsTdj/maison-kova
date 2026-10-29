@@ -49,6 +49,8 @@ Le parcours d'achat est actif (`venteOuverte: true`). Le paiement passe par **Sh
 | `media/` | Teasers compressés (1,5 Mo chacun), boucles de broderie, images d'attente, image de partage `og.jpg` |
 | `images/drop/` | Visuels des pièces, gros plans, motifs brodés, dessins cotés |
 | `brand/` | Fichiers de marque en pleine résolution (arche en SVG vectoriel, logos, motifs) |
+| `assets/favicon.*`, `assets/apple-touch-icon.png`, `assets/icon-*.png`, `site.webmanifest` | Favicon (l'arche orange) et icônes d'application (iPhone, Android) |
+| `media/og-accueil.jpg`, `media/og-boutique.jpg` | Images de partage (1200 × 630) : la marque pour l'accueil, La Maison et les mentions ; les trois pièces pour la boutique et les fiches |
 
 ## Modifier
 
@@ -86,7 +88,9 @@ Puis ouvrir http://localhost:3000.
 
 GitHub Pages, branche `main`, dossier racine (Settings > Pages > Deploy from a branch). Chaque push sur `main` met le site à jour en une minute environ.
 
-Pour un domaine personnalisé (ex. `maisonkova.fr`) : Settings > Pages > Custom domain, puis un enregistrement DNS chez le registrar. Penser alors à mettre à jour l'URL de `og:image` dans les pages.
+Pour un domaine personnalisé (ex. `maisonkova.fr`) : Settings > Pages > Custom domain, puis un enregistrement DNS chez le registrar. Remplacer ensuite `https://rubstdj.github.io/maison-kova/` dans l'en-tête de chaque page (balises `canonical`, `og:url`, `og:image`, `twitter:image`).
+
+Partage sur les réseaux : les plateformes gardent l'aperçu en cache. Après un changement d'image, forcer la mise à jour avec l'outil de débogage de partage de Facebook ou l'inspecteur de LinkedIn ; sur WhatsApp, partager l'adresse avec un paramètre (`?v=2`).
 
 ## Branchements
 
