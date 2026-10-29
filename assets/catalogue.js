@@ -51,7 +51,7 @@ window.KOVA_CATALOGUE = (function () {
       galerie: [
         { type: 'image', src: 'images/drop/tee-arche-plie.webp', alt: 'Tee noir plié avec son hangtag, arche brodée en rouge', fond: 'noir', cover: true },
         { type: 'image', src: 'images/drop/dessin-tee-arche.webp', alt: 'Dessin coté : arche et KOVA de 5 × 8,7 cm, centrés à mi-poitrine', fond: 'dessin' },
-        { type: 'video', src: 'media/broderie-2.mp4', poster: 'media/broderie-2.webp', alt: 'L\'arche en train d\'être brodée en fil rouge', fond: 'noir' },
+        { type: 'video', src: 'media/broderie.mp4', poster: 'media/broderie.webp', alt: 'L\'arche en train d\'être brodée en fil rouge', fond: 'noir' },
         { type: 'image', src: 'images/drop/arche-gros-plan.webp', alt: 'Gros plan sur l\'arche brodée en relief, fil rouge sur coton noir', fond: 'noir', cover: true },
         { type: 'motif', src: 'images/drop/motif-arche-kova.webp', alt: 'Le motif : arche et KOVA en rouge', fond: 'noir' }
       ]
